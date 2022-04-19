@@ -1,8 +1,4 @@
-<template>
-  <div>
-    <Nuxt />
-  </div>
-</template>
+<template src="assets/templates/default.html">
 
 <style>
 html {
