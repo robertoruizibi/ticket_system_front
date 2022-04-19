@@ -1,3 +1,5 @@
+const routes = require('./config/routes')
+
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -23,8 +25,13 @@ export default {
     '@/assets/styles/default.scss'
   ],
 
+  server: {
+    port: 8000 // default: 3000
+  },
+
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: '~/plugins/axios' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -45,5 +52,26 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+
+  router: {
+    middleware: ['auth'],
+    routes: [
+      {
+        name: 'index',
+        path: routes.index,
+        component: 'pages/index.vue'
+      },
+      {
+        name: 'users',
+        path: routes.users,
+        component: 'pages/users/index.vue'
+      },
+      {
+        name: 'user-one',
+        path: '/user/one',
+        component: 'pages/user/one.vue'
+      }
+    ]
   }
 }
