@@ -4,5 +4,13 @@
     <h1 class="title">
       Users
     </h1>
+
+    <ul>
+      <li v-for="(user, index) in users">
+        <img :src="getImage(user.image)" />
+        <span>{{ user.nombre_organizacion }}</span>
+        <span>{{ user.email }}</span>
+      </li>
+    </ul>
   </div>
 </div>

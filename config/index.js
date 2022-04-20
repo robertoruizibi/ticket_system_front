@@ -7,8 +7,25 @@ export default {
   // API endpoints
   api: {
 
-    //AUTH
+    // AUTH
     auth: '/auth',
     login: '/auth/login',
+
+    // USERS
+    users: '/users',
+    password: '/users/change_password',
+
+    // TICKETS
+    tickets: '/tickets',
+
+    // DATES
+    dates: '/dates',
+
+    // REPORTS
+    reports: '/reports',
+    reportById: '/reports/report',
+
+    // UPLOADS
+    upload: '/upload'
   }
 }
