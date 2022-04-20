@@ -1,4 +1,5 @@
 export default {
   index: '/',
-  users: '/users'
+  users: '/users',
+  tickets: '/tickets'
 }

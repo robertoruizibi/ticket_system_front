@@ -71,6 +71,11 @@ export default {
         name: 'user-one',
         path: '/user/one',
         component: 'pages/user/one.vue'
+      },
+      {
+        name: 'tickets',
+        path: routes.tickets,
+        component: 'pages/tickets/index.vue'
       }
     ]
   }

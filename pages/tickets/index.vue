@@ -1,9 +1,7 @@
-<template src="assets/templates/users/users.html" />
+<template src="assets/templates/tickets/tickets.html" />
 
 <script>
 import { mapGetters } from 'vuex'
-import routes from '~/config/routes'
-import { checkRol } from '~/utils/common'
 
 export default {
   computed: {
@@ -12,9 +10,6 @@ export default {
     })
   },
   methods: {
-  },
-  mounted(){
-    checkRol(this)
   }
 }
 </script>
