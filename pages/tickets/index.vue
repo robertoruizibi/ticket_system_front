@@ -1,4 +1,4 @@
-<template src="assets/templates/tickets/tickets.html" />
+<template src="assets/templates/pages/tickets/tickets.html" />
 
 <script>
 import { mapGetters } from 'vuex'

@@ -68,9 +68,9 @@ export default {
         component: 'pages/users/index.vue'
       },
       {
-        name: 'user-one',
-        path: '/user/one',
-        component: 'pages/user/one.vue'
+        name: 'new-user',
+        path: '/user/newUser',
+        component: 'pages/user/newUser.vue'
       },
       {
         name: 'tickets',

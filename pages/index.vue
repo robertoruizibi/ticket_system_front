@@ -1,4 +1,4 @@
-<template src="assets/templates/index.html" />
+<template src="assets/templates/pages/index.html" />
 
 <script>
 import { login } from '~/lib/api'
@@ -31,6 +31,7 @@ export default {
           this.$router.push({ path: routes.users })
         }else {
           console.log('redirijo a tickets');
+          this.$router.push({ path: routes.tickets })
         }
       }
     }

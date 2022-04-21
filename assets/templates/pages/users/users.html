@@ -5,11 +5,15 @@
       Users
     </h1>
 
+    <button @click="createNewUser">Añadir usuario</button>
+
     <ul>
       <li v-for="(user, index) in users">
         <img :src="getImage(user.image)" />
         <span>{{ user.nombre_organizacion }}</span>
         <span>{{ user.email }}</span>
+        <NuxtLink :to="usersPath(user.id_usuario)">Edit</NuxtLink>
+        <button @click="deleteUser(user.id_usuario)">Delete</button>
       </li>
     </ul>
   </div>

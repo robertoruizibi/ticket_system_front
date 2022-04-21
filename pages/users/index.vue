@@ -1,17 +1,18 @@
-<template src="assets/templates/users/users.html" />
+<template src="assets/templates/pages/users/users.html" />
 
 <script>
-import { mapGetters } from 'vuex'
 import routes from '~/config/routes'
-import { checkRol } from '~/utils/common'
-import { getUsers, getFileData } from '~/lib/api'
-import { isArrayEmpty } from '~/utils/common'
-import get from 'lodash/get'
 import config from '~/config'
+import get from 'lodash/get'
+import { checkRol } from '~/utils/common'
+import { mapGetters } from 'vuex'
+import { deleteUser } from '~/lib/api'
+import { isArrayEmpty } from '~/utils/common'
+import { getUsers, getFileData } from '~/lib/api'
 
 
 export default {
-   data() {
+  data() {
     return {
       users: []
     }
@@ -22,12 +23,20 @@ export default {
     })
   },
   methods: {
+
+    createNewUser(){
+      this.$router.push({ path: routes.newUser })
+    },
+
+    async deleteUser(id){
+      await deleteUser(this, id)
+      await this.getUsers()
+    },
+
     async getUsers(){
       let response = await getUsers(this)
       let usersResponse = get(response, 'data.usuarios', [])
-      console.log("🚀 ~ file: index.vue ~ line 26 ~ getUsers ~ usersResponse", usersResponse)
       if (!isArrayEmpty(get(response, 'data.usuarios', []))){
-        console.log('está lleno');
         this.users = usersResponse
       }
     },
@@ -38,7 +47,11 @@ export default {
       const api = config.apiURL
       const type = 'fotoPerfil'
       return `${api}${url}/${type}/${image}` + `?x-auth=${localStorage.getItem('token')}`
-    }
+    },
+
+    usersPath(id){
+      return `${routes.users}/${id}`
+    },
   },
   async mounted(){
     checkRol(this)
