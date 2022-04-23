@@ -81,6 +81,11 @@ export default {
         name: 'new-ticket',
         path: routes.tickets,
         component: 'pages/tickets/newTicket.vue'
+      },
+      {
+        name: 'new-report',
+        path: routes.reports,
+        component: 'pages/reports/newReport.vue'
       }
     ]
   }
