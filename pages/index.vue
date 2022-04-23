@@ -4,7 +4,7 @@
 import { login } from '~/lib/api'
 import { mapGetters } from 'vuex'
 import get from 'lodash/get'
-import { isObjEmpty } from '~/utils/common'
+import { isObjEmpty, checkRolInLogin } from '~/utils/common'
 import routes from '~/config/routes'
 
 export default {
@@ -36,6 +36,9 @@ export default {
       }
     }
   },
+  mounted(){
+    checkRolInLogin(this)
+  }
 }
 </script>
 

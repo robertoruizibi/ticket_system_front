@@ -9,6 +9,13 @@ export const checkRol = ({$store, $router}) => {
   }
 }
 
+export const checkRolInLogin = ({$store, $router}) => {
+  let user = $store.getters['user/getUser']
+  if (!isObjEmpty(user) && user.rol === 'empresa' || user.rol === 'cliente' ) {
+    $router.push({ path: routes.tickets })
+  }
+}
+
 export const isValidEmail = email => {
   const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-z\-0-9]+\.)+[a-z]{2,}))$/
   const reAccents = /[À-ź]/

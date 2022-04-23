@@ -1,0 +1,9 @@
+<div>
+  <template v-if="editMode">
+    <button @click="detailsTicket">Volver a detalles ticket</button>
+    <ticket-form />
+  </template>
+  <template v-else>
+    <button @click="editTicket">Editar ticket</button>
+  </template>
+</div>

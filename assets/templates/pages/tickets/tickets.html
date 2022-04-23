@@ -4,5 +4,18 @@
     <h1 class="title">
       Tickets
     </h1>
+
+    <button @click="createNewTicket">Añadir ticket</button>
+
+    <ul>
+      <li v-for="(ticket, index) in tickets">
+        <span>{{ ticket.titulo }}</span>
+        <span>{{ getParsedDate(ticket.dates) }}</span>
+        <span>Estado: {{ estado(ticket.enabled) }}</span>
+        <span>Prioridad: {{ ticket.prioridad }}</span>
+        <NuxtLink :to="ticketsPath(ticket.id_ticket)">Edit</NuxtLink>
+        <button @click="deleteTicket(ticket.id_ticket)">Delete</button>
+      </li>
+    </ul>
   </div>
 </div>
