@@ -17,6 +17,7 @@ export default {
 
     // TICKETS
     tickets: '/tickets',
+    userTickets: '/tickets/user',
 
     // DATES
     dates: '/dates',
