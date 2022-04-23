@@ -3,5 +3,6 @@ export default {
   users: '/users',
   newUser: '/users/newUser',
   tickets: '/tickets',
-  newTicket: '/tickets/newTicket'
+  newTicket: '/tickets/newTicket',
+  reports: '/reports'
 }

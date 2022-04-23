@@ -1,0 +1,17 @@
+<div>
+  <div>
+    {{ title }}
+    <form enctype='multipart/form-data' @submit.prevent="submitForm">
+      <!-- Contenido -->
+      <textarea name="contenido" id="contenido" v-model="contenido"placeholder="Escribe aquí tu reporte..." @blur="checkContenido" />
+      <p v-if="contenidoError">{{contenidoErrorMsg}}</p>
+  
+      <!-- Fichero -->
+      <input type="file" name="file" id="file" ref="myFile" accept=".doc,.docx,.xls,.pdf,.zip,.jpeg,.jpg,.png" @change="loadFile">
+      <p v-if="fileError">{{fileErrorMsg}}</p>
+  
+      <!-- Submit -->
+      <button type="submit">Guardar cambios</button>
+    </form>
+  </div>
+</div>

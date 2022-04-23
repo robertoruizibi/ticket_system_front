@@ -5,5 +5,14 @@
   </template>
   <template v-else>
     <button @click="editTicket">Editar ticket</button>
+    <ul>
+      <li v-for="(report, index) in reports">
+        <p><span>{{ report.contenido }}</span></p>
+        <a v-if="report.archivo_adjunto" :href="report.url" download>{{ report.archivo_adjunto }}</a>
+        <NuxtLink :to="reportsEditPath(report.id_reporte)">Edit</NuxtLink>
+        <button @click="deleteSingleReport(report.id_reporte)">Delete</button>
+      </li>
+    </ul>
+    <button @click="addReport">Añadir reporte</button>
   </template>
 </div>
