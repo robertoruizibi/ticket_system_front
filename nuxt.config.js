@@ -86,6 +86,11 @@ export default {
         name: 'new-report',
         path: routes.reports,
         component: 'pages/reports/newReport.vue'
+      },
+      {
+        name: 'contact',
+        path: routes.contact,
+        component: 'pages/contact/index.vue'
       }
     ]
   }

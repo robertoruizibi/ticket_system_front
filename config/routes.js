@@ -4,5 +4,6 @@ export default {
   newUser: '/users/newUser',
   tickets: '/tickets',
   newTicket: '/tickets/newTicket',
-  reports: '/reports'
+  reports: '/reports',
+  contact: '/contact'
 }
