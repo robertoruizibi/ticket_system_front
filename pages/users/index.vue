@@ -33,7 +33,7 @@ export default {
 
   computed: {
     numPages(){
-      return (this.maxUsers % 10) + 1
+      return Math.ceil(this.maxUsers / 10) 
     },
     ...mapGetters({
       user: 'user/getUser'
@@ -93,11 +93,8 @@ export default {
     },
 
     searchUser(){
-      console.log('this.allUsers', this.allUsers);
       let email = this.allUsers.filter(user => user.email === this.search)
-      console.log("🚀 ~ file: index.vue ~ line 95 ~ searchUser ~ email", email)
       let name = this.allUsers.filter(user => user.nombre_organizacion === this.search)
-      console.log("🚀 ~ file: index.vue ~ line 97 ~ searchUser ~ name", name)
       if (email.length > 0) this.users = email
       if (name.length > 0) this.users = name
       if (name.length === 0 && email.length === 0) this.users = this.copyUsers

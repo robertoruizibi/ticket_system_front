@@ -13,15 +13,53 @@ import { getUserTickets, getTicketDates, deleteTicket } from '~/lib/api'
 export default {
   data() {
     return {
-      tickets: []
+      tickets: [],
+      copyTickets: [],
+      allTickets: [],
+      filter: 'date&asc',
+      desde: 0,
+      maxTickets: 0,
+      actualPage: 1,
+      search: ''
+    }
+  },
+  watch: {
+    filter(newVal, oldVal){
+      this.checkFilter(newVal)
     }
   },
   computed: {
+    numPages(){
+      return Math.ceil(this.maxTickets / 10) 
+    },
     ...mapGetters({
       loggedUser: 'user/getUser'
     })
   },
   methods: {
+    async checkFilter(){
+      let splitted = this.filter.split('&')
+      if (splitted.length === 2){
+        let typeOrder = splitted[0]
+        let asc = splitted[1]
+        await this.getUserTickets(typeOrder, asc, this.desde)
+      }
+    },
+
+    async changePage(pageIndex){
+      this.desde = (pageIndex - 1) * 10
+      this.checkFilter()
+      this.$router.push({ path: `${routes.tickets}?desde=${this.desde}` })
+      await this.checkDesdeSurpassedMaxTickets()
+    },
+
+    async checkDesdeSurpassedMaxTickets(){
+      if (this.desde > this.maxTickets) {
+        await this.getUserTickets('date', 'asc', 0)
+        this.$router.push({ path: routes.tickets })
+      }
+    },
+
     createNewTicket(){
       this.$router.push({ path: routes.newTicket })
     },
@@ -35,11 +73,13 @@ export default {
       return enabled ? 'Abierto' : 'Cerrado'
     },
 
-    async getUserTickets(){
-      let response = await getUserTickets(this, this.loggedUser.id_usuario)
+    async getUserTickets(typeOrder, asc, desde){
+      let response = await getUserTickets(this, this.loggedUser.id_usuario, typeOrder, asc, desde)
       let tickets = get(response, 'data.tickets', [])
       if (!isArrayEmpty(get(response, 'data.tickets', []))){
         this.tickets = tickets
+        this.maxTickets = get(response, 'data.page.total', 0)
+        this.allTickets = get(response, 'data.allTickets', [])
         this.tickets = await Promise.all(
           this.tickets.map(async ticket => {
             let dates = await this.getDates(ticket.id_ticket)
@@ -54,7 +94,21 @@ export default {
             }
           })
         )
-        console.log('this.tickets', this.tickets);
+        this.allTickets = await Promise.all(
+          this.allTickets.map(async ticket => {
+            let dates = await this.getDates(ticket.id_ticket)
+            return {
+              cliente: ticket.cliente,
+              enabled: ticket.enabled,
+              id_ticket: ticket.id_ticket,
+              prioridad: ticket.prioridad,
+              responsable: ticket.responsable,
+              titulo: ticket.titulo,
+              dates: dates
+            }
+          })
+        )
+        this.copyTickets = this.tickets
       }
     },
 
@@ -67,14 +121,31 @@ export default {
       return new Date(date).toLocaleDateString('es-ES')
     },
 
+    resetTicket(){
+      this.tickets = this.copyTickets
+      this.search = ''
+    },
+
+    searchTicket(){
+      let title = this.allTickets.filter(ticket => {
+        return ticket.titulo === this.search
+      })
+      if (title.length > 0) {
+        this.tickets = title
+      } else {
+        this.tickets = this.copyTickets
+      }
+    },
+
     ticketsPath(id){
       return `${routes.tickets}/${id}`
     },
   },
   async mounted(){
-    console.log('this.loggedUser', this.loggedUser);
     checkRol(this)
+    this.desde = !isNaN(this.$route.query.desde) ? this.$route.query.desde : 0 
     await this.getUserTickets()
+    this.checkDesdeSurpassedMaxTickets()
   }
 }
 </script>

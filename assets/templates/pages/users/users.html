@@ -10,8 +10,8 @@
     <button @click="resetUser" v-if="users.length === 1">Restablecer</button>
 
     <select name="filter" id="filter" v-model="filter">
-      <option value="name&asc">Nombre organización A-Z</option>
-      <option value="name&desc">Nombre organización Z-A</option>
+      <option value="name&asc">Nombre A-Z</option>
+      <option value="name&desc">Nombre Z-A</option>
       <option value="email&asc">Email A-Z</option>
       <option value="email&desc">Email Z-A</option>
       <option value="enabled&asc">Habilitados ↑</option>
@@ -23,16 +23,16 @@
     <button @click="createNewUser">Añadir usuario</button>
 
     <section>
-    <ul>
-      <li v-for="(user, index) in users">
-        <img :src="getImage(user.image)" />
-        <span>{{ user.nombre_organizacion }}</span>
-        <span>{{ user.email }}</span>
-        <NuxtLink :to="usersPath(user.id_usuario)">Edit</NuxtLink>
-        <button @click="deleteUser(user.id_usuario)">Delete</button>
-      </li>
-    </ul>
-  </section>
+      <ul>
+        <li v-for="(user, index) in users">
+          <img :src="getImage(user.image)" />
+          <span>{{ user.nombre_organizacion }}</span>
+          <span>{{ user.email }}</span>
+          <NuxtLink :to="usersPath(user.id_usuario)">Edit</NuxtLink>
+          <button @click="deleteUser(user.id_usuario)">Delete</button>
+        </li>
+      </ul>
+    </section>
 
     <section>
 			<ul>
