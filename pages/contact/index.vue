@@ -1,12 +1,11 @@
 <template src="assets/templates/pages/contact/contactPage.html" />
 
 <script>
+import contactForm from '~/components/contactForm'
+
 export default {
-  data() {
-    return {}
-  },
-  mounted(){
-    console.log('contacto');
+  components: {
+    contactForm
   }
 }
 </script>

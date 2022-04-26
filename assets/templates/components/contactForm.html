@@ -1,0 +1,23 @@
+<div>
+  ContactForm
+  <form @submit.prevent="sendEmail">
+    <!-- Nombre -->
+    <label for="from_name">Nombre</label>
+    <input type="text" name="from_name" id="from_name" v-model="name" disabled>
+
+    <!-- Email -->
+    <label for="from_email">Email</label>
+    <input type="text" name="from_email" id="from_email" v-model="email" disabled>
+
+    <!-- Receptor -->
+    <label for="to_name">Para</label>
+    <input type="text" name="to_name" id="to_name" v-model="to_name" disabled>
+
+    <!-- Mensaje -->
+    <label for="message">Mensaje</label>
+    <textarea name="message" id="message" cols="30" rows="10" v-model="message" />
+
+    <!-- Submit -->
+    <button type="submit">Guardar cambios</button>
+  </form>
+</div>
