@@ -38,7 +38,11 @@ export default {
 
     // new user computeds
     isAdminUser(){
-      return get(this.userLogged, 'rol', '') === 'empresa' || this.isNewUserMode
+      return get(this.userLogged, 'rol', '') === 'empresa' || this.isNewUserMode || this.isProfile
+    },
+
+    isProfile(){
+      return this.$route.query.profile
     },
 
 
@@ -55,6 +59,12 @@ export default {
     })
   },
   methods: {
+
+    checkUserProfileUpdateAvaliability(){
+      if (this.$route.params.users !== this.userLogged.id_usuario.toString()) {
+        this.$router.push({ path: routes.tickets })
+      }
+    },
 
     // common methods
 
@@ -192,7 +202,11 @@ export default {
   },
 
   async mounted(){
-    checkRol(this)
+    if (this.isProfile) {
+      this.checkUserProfileUpdateAvaliability()
+    } else { 
+      checkRol(this) 
+    }
     if (!this.isNewUserMode){
       await this.getUser()
       this.loadInitialValues()

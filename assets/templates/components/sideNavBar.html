@@ -1,0 +1,8 @@
+<div>
+  <ul>
+    <li v-for="(option, index) in actualOptions" @click="redirectToOption(option)">
+      <template v-if="checkSelected(option)"><strong>{{ option }}</strong></template>
+      <template v-else>{{ option }}</template>
+    </li>
+  </ul>
+</div>
