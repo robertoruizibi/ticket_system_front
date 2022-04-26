@@ -14,15 +14,55 @@ import { getUsers, getFileData } from '~/lib/api'
 export default {
   data() {
     return {
-      users: []
+      users: [],
+      copyUsers: [],
+      allUsers: [],
+      filter: 'date&asc',
+      desde: 0,
+      maxUsers: 0,
+      actualPage: 1,
+      search: ''
     }
   },
+
+  watch: {
+    filter(newVal, oldVal){
+      this.checkFilter(newVal)
+    }
+  },
+
   computed: {
+    numPages(){
+      return (this.maxUsers % 10) + 1
+    },
     ...mapGetters({
       user: 'user/getUser'
     })
   },
   methods: {
+
+    async changePage(pageIndex){
+      this.desde = (pageIndex - 1) * 10
+      this.checkFilter()
+      this.$router.push({ path: `${routes.users}?desde=${this.desde}` })
+      await this.checkDesdeSurpassedMaxUsers()
+    },
+
+    async checkDesdeSurpassedMaxUsers(){
+      if (this.desde > this.maxUsers) {
+        await this.getUsers('date', 'asc', 0)
+        this.$router.push({ path: routes.users })
+      }
+    },
+
+    async checkFilter(){
+      let splitted = this.filter.split('&')
+      if (splitted.length === 2){
+        let typeOrder = splitted[0]
+        let asc = splitted[1]
+        await this.getUsers(typeOrder, asc, this.desde)
+      }
+    },
 
     createNewUser(){
       this.$router.push({ path: routes.newUser })
@@ -33,11 +73,14 @@ export default {
       await this.getUsers()
     },
 
-    async getUsers(){
-      let response = await getUsers(this)
+    async getUsers(typeOrder, asc, desde){
+      let response = await getUsers(this, typeOrder, asc, desde)
       let usersResponse = get(response, 'data.usuarios', [])
       if (!isArrayEmpty(get(response, 'data.usuarios', []))){
         this.users = usersResponse
+        this.copyUsers = usersResponse
+        this.maxUsers = get(response, 'data.page.total', 0)
+        this.allUsers = get(response, 'data.allUsers', [])
       }
     },
 
@@ -49,13 +92,31 @@ export default {
       return `${api}${url}/${type}/${image}` + `?x-auth=${localStorage.getItem('token')}`
     },
 
+    searchUser(){
+      console.log('this.allUsers', this.allUsers);
+      let email = this.allUsers.filter(user => user.email === this.search)
+      console.log("🚀 ~ file: index.vue ~ line 95 ~ searchUser ~ email", email)
+      let name = this.allUsers.filter(user => user.nombre_organizacion === this.search)
+      console.log("🚀 ~ file: index.vue ~ line 97 ~ searchUser ~ name", name)
+      if (email.length > 0) this.users = email
+      if (name.length > 0) this.users = name
+      if (name.length === 0 && email.length === 0) this.users = this.copyUsers
+    },
+
+    resetUser(){
+      this.users = this.copyUsers
+      this.search = ''
+    },
+
     usersPath(id){
       return `${routes.users}/${id}`
     },
   },
   async mounted(){
     checkRol(this)
-    await this.getUsers()
+    this.desde = !isNaN(this.$route.query.desde) ? this.$route.query.desde : 0 
+    await this.getUsers('date', 'asc', this.desde)
+    this.checkDesdeSurpassedMaxUsers()
   }
 }
 </script>
