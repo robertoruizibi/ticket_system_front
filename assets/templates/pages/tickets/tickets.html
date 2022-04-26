@@ -5,6 +5,21 @@
       Tickets
     </h1>
 
+    <input type="text" v-model="search">
+    <button @click="searchTicket">Buscar</button>
+    <button @click="resetTicket" v-if="tickets.length === 1">Restablecer</button>
+
+    <select name="filter" id="filter" v-model="filter">
+      <option value="title&asc">Nombre A-Z</option>
+      <option value="title&desc">Nombre Z-A</option>
+      <option value="enabled&asc">Abiertos ↑</option>
+      <option value="enabled&desc">Abiertos ↓</option>
+      <option value="date&asc">Fecha ↑</option>
+      <option value="date&desc">Fecha ↓</option>
+      <option value="priority&asc">Prioridad ↑</option>
+      <option value="priority&desc">Prioridad ↓</option>
+    </select>
+
     <button @click="createNewTicket">Añadir ticket</button>
 
     <ul>
@@ -17,5 +32,11 @@
         <button @click="deleteTicket(ticket.id_ticket)">Delete</button>
       </li>
     </ul>
+
+    <section>
+			<ul>
+        <li v-for="index in numPages" :key="index" @click="changePage(index)">{{ index }}</li>
+			</ul>
+		</section>
   </div>
 </div>
