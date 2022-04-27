@@ -13,6 +13,9 @@ export default {
     }
   },
   computed:{
+    actualPath(){
+      return this.$route.path
+    },
     imageUrl() {
       const url = config.api.upload
       const api = config.apiURL
@@ -25,6 +28,13 @@ export default {
   methods: {
     logout(){
       logout(this)
+    },
+    redirectConfiguration(){
+      let route = `${routes.users}/${this.loggedUser.id_usuario}?profile=true`
+
+      if (this.actualPath !== route){
+        this.$router.push({ path: route })
+      }
     }
   }
 }
