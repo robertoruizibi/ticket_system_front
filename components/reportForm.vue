@@ -85,7 +85,6 @@ export default {
         }
         let reportData = await updateReport(this, this.reportID, this.report)
         if (this.file !== '' && get(reportData, 'data.report.id_reporte', null)){
-          console.log('uploadeo');
           this.uploadFile(this.reportID)
         }
         if (this.file === '' && this.archivoAdjunto !== '') {

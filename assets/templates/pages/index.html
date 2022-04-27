@@ -1,8 +1,9 @@
 <div class="container">
   <p>Login</p>
   <form @submit.prevent="loginUser">
-    <input type="email" name="email" id="email" placeholder="Nombre usuario" v-model="email">
+    <input type="email" name="email" id="email" placeholder="Email" v-model="email">
     <input type="password" name="password" id="password" placeholder="Contraseña" v-model="password">
     <button type="submit">Login</button>
   </form>
+  <p v-if="loginError">{{loginMessage}}</p>
 </div>
