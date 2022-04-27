@@ -10,6 +10,9 @@ export default {
     htmlAttrs: {
       lang: 'en'
     },
+    bodyAttrs: {
+      class: 'bg-gradient-primary'
+    },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -22,7 +25,9 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    '@/assets/styles/default.scss'
+    '@/assets/styles/default.scss',
+    '@/assets/styles/sb-admin-2.css',
+    '@/assets/styles/sb-admin-2.min.css'
   ],
 
   server: {
