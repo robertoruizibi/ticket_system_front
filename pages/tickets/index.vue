@@ -128,7 +128,7 @@ export default {
 
     searchTicket(){
       let title = this.allTickets.filter(ticket => {
-        return ticket.titulo === this.search
+        return ticket.titulo.includes(this.search)
       })
       if (title.length > 0) {
         this.tickets = title

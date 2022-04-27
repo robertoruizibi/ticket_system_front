@@ -7,7 +7,7 @@
 
     <input type="text" v-model="search">
     <button @click="searchTicket">Buscar</button>
-    <button @click="resetTicket" v-if="tickets.length === 1">Restablecer</button>
+    <button @click="resetTicket" v-if="search.length > 0">Restablecer</button>
 
     <select name="filter" id="filter" v-model="filter">
       <option value="title&asc">Nombre A-Z</option>
