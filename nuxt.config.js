@@ -11,7 +11,8 @@ export default {
       lang: 'en'
     },
     bodyAttrs: {
-      class: 'bg-gradient-primary'
+      class: 'bg-gradient-dark',
+      style: 'overflow: hidden'
     },
     meta: [
       { charset: 'utf-8' },
@@ -27,7 +28,8 @@ export default {
   css: [
     '@/assets/styles/default.scss',
     '@/assets/styles/sb-admin-2.css',
-    '@/assets/styles/sb-admin-2.min.css'
+    // '@/assets/styles/fontawesome-free/css/all.css'
+    // '@/assets/styles/sb-admin-2.min.css'
   ],
 
   server: {

@@ -1,8 +1,35 @@
-<div>
+<!-- <div>
   <ul>
     <li v-for="(option, index) in actualOptions" @click="redirectToOption(option)">
       <template v-if="checkSelected(option)"><strong>{{ option }}</strong></template>
       <template v-else>{{ option }}</template>
     </li>
   </ul>
-</div>
+</div> -->
+
+<!-- Sidebar -->
+<ul class="navbar-nav bg-gradient-green sidebar sidebar-dark accordion" id="accordionSidebar">
+
+  <!-- Sidebar - Brand -->
+  <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <div class="sidebar-brand-icon rotate-n-15">
+      <i class="fa fa-spinner"></i>
+    </div>
+    <div class="sidebar-brand-text mx-3">Tycket System</div>
+  </a>
+
+  <!-- Divider -->
+  <hr class="sidebar-divider my-0">
+
+  <!-- Nav Item - Dashboard -->
+  <li class="nav-item" v-for="(option, index) in actualOptions" @click="redirectToOption(option)">
+    <a class="nav-link" style="cursor: pointer">
+      <font-awesome-icon icon="fa-solid fa-ticket-simple" />
+      <template v-if="checkSelected(option)"><span class="text-uppercase"><strong>{{ option }}</strong></span></template>
+      <template v-else><span class="text-uppercase">{{ option }}</span></template>
+    </a>
+  </li>
+  
+
+</ul>
+<!-- End of Sidebar -->
