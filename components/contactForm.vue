@@ -31,7 +31,7 @@ export default {
           message: this.message,
         }, config.account_id);
       } catch (error) {
-          console.log({error})
+        // console.log({error})
       }
       // Reset form field
       this.message = ''

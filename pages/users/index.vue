@@ -94,9 +94,7 @@ export default {
 
     searchUser(){
       let email = this.allUsers.filter(user => user.email.includes(this.search))
-      console.log("🚀 ~ file: index.vue ~ line 97 ~ searchUser ~ email", email)
       let name = this.allUsers.filter(user => user.nombre_organizacion.includes(this.search))
-      console.log("🚀 ~ file: index.vue ~ line 99 ~ searchUser ~ name", name)
       if (email.length > 0) this.users = email
       if (name.length > 0) this.users = name
       if (name.length === 0 && email.length === 0) this.users = this.copyUsers

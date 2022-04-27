@@ -12,6 +12,8 @@ export default {
     return {
       email: '',
       password: '',
+      loginError: false,
+      loginMessage: 'Usuario o contraseña incorrectos'
     }
   },
   computed: {
@@ -23,14 +25,12 @@ export default {
     async loginUser(){
       let response = await login(this, this.email, this.password)
       if (!isObjEmpty(get(response, 'error', {}))) {
-        console.log('ha habido un error en login');
+        this.loginError = true
       }else {
-        console.log('login correcto, redirijo');
+        this.loginError = false
         if (get(response, 'data.user.rol', '') === 'empresa') {
-          console.log('push a routes.users', routes.users);
           this.$router.push({ path: routes.users })
         }else {
-          console.log('redirijo a tickets');
           this.$router.push({ path: routes.tickets })
         }
       }
