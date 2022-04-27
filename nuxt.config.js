@@ -28,6 +28,7 @@ export default {
   css: [
     '@/assets/styles/default.scss',
     '@/assets/styles/sb-admin-2.css',
+    '@fortawesome/fontawesome-svg-core/styles.css'
     // '@/assets/styles/fontawesome-free/css/all.css'
     // '@/assets/styles/sb-admin-2.min.css'
   ],
@@ -39,6 +40,7 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: '~/plugins/axios' },
+    { src: '~/plugins/fontawesome.js' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -51,7 +53,7 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
+    '@nuxtjs/axios'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

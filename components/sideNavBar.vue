@@ -24,6 +24,14 @@ export default {
     })
   },
   methods: {
+    checkIcon(option){
+      let icon = ''
+      if (option === 'Tickets') {icon = 'fa-solid fa-clipboard-list' }
+      else if (option === 'Usuarios') {icon = 'fa-solid fa-user'}
+      else if (option === 'Configuración') {icon = 'fas fa-cog'}
+      else if (option === 'Contacto') {icon = 'fa-solid fa-address-book'}
+      return icon
+    },
     checkSelected(option){
       let selected = false
       let splitted = this.actualPath.split('/')

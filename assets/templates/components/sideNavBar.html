@@ -24,7 +24,7 @@
   <!-- Nav Item - Dashboard -->
   <li class="nav-item" v-for="(option, index) in actualOptions" @click="redirectToOption(option)">
     <a class="nav-link" style="cursor: pointer">
-      <font-awesome-icon icon="fa-solid fa-ticket-simple" />
+      <font-awesome-icon :icon="checkIcon(option)" />&nbsp;
       <template v-if="checkSelected(option)"><span class="text-uppercase"><strong>{{ option }}</strong></span></template>
       <template v-else><span class="text-uppercase">{{ option }}</span></template>
     </a>
