@@ -44,15 +44,12 @@ export default {
       }
     },
     redirectToOption(option){
-      console.log("🚀 ~ file: sideNavBar.vue ~ line 38 ~ redirectToOption ~ option", option)
       let route = ''
 
       if (option === 'Tickets') {route = routes.tickets}
       else if (option === 'Usuarios') {this.checkUserType(); route = routes.users}
       else if (option === 'Configuración') {route = `${routes.users}/${this.loggedUser.id_usuario}?profile=true`}
       else if (option === 'Contacto') {route = routes.contact}
-
-      console.log('route', route);
 
       if (this.actualPath !== route){
         this.$router.push({ path: route })
