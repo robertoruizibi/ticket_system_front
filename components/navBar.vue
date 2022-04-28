@@ -2,7 +2,7 @@
 <script>
 import config from '~/config'
 import routes from '~/config/routes'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import { logout } from '~/lib/api'
 
 
@@ -12,9 +12,22 @@ export default {
 
     }
   },
+  asyncData({ from }) {
+    console.log(from);
+  },
   computed:{
     actualPath(){
       return this.$route.path
+    },
+    routeTitle(){
+      let title = ''
+      let splitted = this.actualPath.split('/')
+      if (`/${splitted[1]}` === routes.tickets) {title = 'Tickets'}
+      else if (`/${splitted[1]}` === routes.reports) {title = 'Reporte'}
+      else if (this.$route.query.profile) {title = 'Configuración'}
+      else if (`/${splitted[1]}` === routes.users) {title = 'Usuarios'}
+      else if (`/${splitted[1]}` === routes.contact) {title = 'Contacto'}
+      return title
     },
     imageUrl() {
       const url = config.api.upload
@@ -22,10 +35,14 @@ export default {
       return `${api}${url}/fotoPerfil/${this.loggedUser.imagen}?x-auth=${localStorage.getItem('token')}`
     },
     ...mapGetters({
-      loggedUser: 'user/getUser'
+      loggedUser: 'user/getUser',
+      sideNavBarState: 'sideNavBar/getSideNavBar'
     })
   },
   methods: {
+    changeSideNavBarState(){
+      this.storeSideNavBar(!this.sideNavBarState)
+    },
     logout(){
       logout(this)
     },
@@ -35,7 +52,10 @@ export default {
       if (this.actualPath !== route){
         this.$router.push({ path: route })
       }
-    }
+    },
+    ...mapMutations({
+      storeSideNavBar: 'sideNavBar/storeSideNavBar'
+    })
   }
 }
 </script>

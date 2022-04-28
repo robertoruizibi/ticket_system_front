@@ -9797,7 +9797,7 @@ a:focus {
 }
 
 #wrapper #content-wrapper {
-  background-color: #f8f9fc;
+  /* background-color: #f8f9fc; */
   width: 100%;
   overflow-x: hidden;
 }
@@ -9905,9 +9905,9 @@ a:focus {
   background-size: cover;
 }
 
-.bg-gradient-green {
-  background-color: #8b9549;
-  background-image: linear-gradient(180deg, #8b9549 10%, #6c7700 100%);
+.bg-gradient-dark {
+  background-color: #333645;
+  /* background-image: linear-gradient(180deg, #333645 10%, #292b37 100%); */
   background-size: cover;
 }
 
@@ -9947,9 +9947,9 @@ a:focus {
   background-size: cover;
 }
 
-.bg-gradient-dark {
-  background-color: #333645;
-  background-image: linear-gradient(180deg, #333645 10%, #373840 100%);
+.bg-gradient-background {
+  background-color: #292b37;
+  /* background-image: linear-gradient(180deg, #292b37 10%, #373840 100%); */
   background-size: cover;
 }
 
@@ -10178,6 +10178,7 @@ a:focus {
 }
 
 .topbar #sidebarToggleTop {
+  background-color: #dddfeb;
   height: 2.5rem;
   width: 2.5rem;
 }
@@ -10439,10 +10440,10 @@ a:focus {
   outline: none;
 }
 
-.sidebar.toggled {
-  width: 0 !important;
-  overflow: hidden;
-}
+/* .sidebar.toggled { */
+  /* width: 0 !important; */
+  /* overflow: hidden; */
+/* } */
 
 .sidebar.toggled #sidebarToggle::after {
   content: '\f105';

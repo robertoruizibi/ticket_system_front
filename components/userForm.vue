@@ -4,7 +4,7 @@
 import get from 'lodash/get'
 import routes from '~/config/routes'
 import { checkRol } from '~/utils/common'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import { isObjEmpty, isValidPassword, isValidEmail } from '~/utils/common'
 import { getUser, createUser, updateUser, updatePassword, uploadFile } from '~/lib/api'
 
@@ -55,13 +55,15 @@ export default {
       return this.$route.path === routes.newUser
     },
     ...mapGetters({
-      userLogged: 'user/getUser'
+      userLogged: 'user/getUser',
+      getPreviousRoute: 'sideNavBar/getPreviousRoute'
     })
   },
   methods: {
 
     checkUserProfileUpdateAvaliability(){
       if (this.$route.params.users !== this.userLogged.id_usuario.toString()) {
+        this.storePreviousRoute(this.$route.path)
         this.$router.push({ path: routes.tickets })
       }
     },
@@ -159,6 +161,14 @@ export default {
       
     },
 
+    returnRoute(){
+      let route = '/users'
+      if (this.getPreviousRoute !== ''){
+        route = this.getPreviousRoute
+      }
+      this.$router.push({ path: route })
+    },
+
     async createImage(file) {
       var image = new Image();
       var reader = new FileReader();
@@ -198,10 +208,15 @@ export default {
         this.email = this.user.email
         this.enabled = this.user.enabled
       }
-    }
+    },
+
+    ...mapMutations({
+      storePreviousRoute: 'sideNavBar/storePreviousRoute'
+    })
   },
 
   async mounted(){
+    console.log('getPreviousRoute', this.getPreviousRoute);
     if (this.isProfile) {
       this.checkUserProfileUpdateAvaliability()
     } else { 

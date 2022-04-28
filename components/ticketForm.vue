@@ -4,7 +4,7 @@
 import get from 'lodash/get'
 import routes from '~/config/routes'
 import { checkRol } from '~/utils/common'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import { isObjEmpty } from '~/utils/common'
 import { getUsers, updateTicket, getTicket, createTicket, createTicketDate } from '~/lib/api'
 
@@ -48,6 +48,9 @@ export default {
     isNewTicketMode(){
       return this.$route.path === routes.newTicket
     },
+    ...mapGetters({
+      getPreviousRoute: 'sideNavBar/getPreviousRoute'
+    })
   },
   methods: {
     checkTituloMaxCar(){
@@ -134,7 +137,17 @@ export default {
         let id = get(this.$route.params, 'ticket', null)
         await updateTicket(this, id, this.ticket)
       }
-    }
+    },
+    returnRoute(){
+      let route = '/tickets'
+      if (this.getPreviousRoute !== ''){
+        route = this.getPreviousRoute
+      }
+      this.$router.push({ path: route })
+    },
+    ...mapMutations({
+      storePreviousRoute: 'sideNavBar/storePreviousRoute'
+    })
   },
   async mounted(){
     checkRol(this)

@@ -1,11 +1,11 @@
 <div>
-  <div class="row">
-    <div class="col-3">
-      <side-nav-bar v-if="!isLoginPath" style="position: sticky;" />
-    </div>
-    <div class="col-9">
-      <!-- <nav-bar v-if="!isLoginPath" /> -->
-      <Nuxt />
+  <div id="wrapper">
+    <side-nav-bar v-if="!isLoginPath && !hideSideNavBar" />
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        <nav-bar v-if="!isLoginPath" />
+        <Nuxt />
+      </div>
     </div>
   </div>
 </div>

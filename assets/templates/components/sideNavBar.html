@@ -8,14 +8,14 @@
 </div> -->
 
 <!-- Sidebar -->
-<ul class="navbar-nav bg-gradient-green sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-gradient-dark sidebar collapsed sidebar-dark accordion" id="accordionSidebar">
 
   <!-- Sidebar - Brand -->
-  <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+  <a class="sidebar-brand d-flex align-items-center justify-content-center" style="cursor: pointer;" @click="redirectToOption('Tickets')">
     <div class="sidebar-brand-icon rotate-n-15">
       <i class="fa fa-spinner"></i>
     </div>
-    <div class="sidebar-brand-text mx-3">Tycket System</div>
+    <div class="sidebar-brand-text mx-3 text-white">Tycket System</div>
   </a>
 
   <!-- Divider -->
@@ -24,9 +24,18 @@
   <!-- Nav Item - Dashboard -->
   <li class="nav-item" v-for="(option, index) in actualOptions" @click="redirectToOption(option)">
     <a class="nav-link" style="cursor: pointer">
-      <font-awesome-icon :icon="checkIcon(option)" />&nbsp;
-      <template v-if="checkSelected(option)"><span class="text-uppercase"><strong>{{ option }}</strong></span></template>
-      <template v-else><span class="text-uppercase">{{ option }}</span></template>
+      <template v-if="checkSelected(option)">
+        <font-awesome-icon :icon="checkIcon(option)" style="color: #ffaa06;" />&nbsp;
+        <span class="text-uppercase">
+          <strong style="color: #ffaa06;">{{ option }}&nbsp;
+            <font-awesome-icon icon="fa-solid fa-caret-left" />
+          </strong>
+        </span>
+      </template>
+      <template v-else>
+        <font-awesome-icon :icon="checkIcon(option)" />&nbsp;
+        <span class="text-uppercase text-white">{{ option }}</span>
+      </template>
     </a>
   </li>
   

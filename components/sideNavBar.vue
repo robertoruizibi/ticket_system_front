@@ -4,7 +4,7 @@
 
 import get from 'lodash/get'
 import routes from '~/config/routes'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import { isObjEmpty } from '~/utils/common'
 
 export default {
@@ -59,10 +59,15 @@ export default {
       else if (option === 'Configuración') {route = `${routes.users}/${this.loggedUser.id_usuario}?profile=true`}
       else if (option === 'Contacto') {route = routes.contact}
 
+      this.storeSideNavBar(true)
+
       if (this.actualPath !== route){
         this.$router.push({ path: route })
       }
-    }
+    },
+    ...mapMutations({
+      storeSideNavBar: 'sideNavBar/storeSideNavBar'
+    })
   },
   mounted(){
     this.checkUserType()

@@ -5,7 +5,7 @@ import get from 'lodash/get'
 import config from '~/config'
 import routes from '~/config/routes'
 import { checkRol } from '~/utils/common'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import { isObjEmpty, isValidPassword, isValidEmail } from '~/utils/common'
 import { createReport, uploadFile, getSingleReport, updateReport, deleteFile } from '~/lib/api'
 export default {
@@ -35,7 +35,10 @@ export default {
     },
     isNewReportMode(){
       return this.$route.query.new !== undefined
-    }
+    },
+    ...mapGetters({
+      getPreviousRoute: 'sideNavBar/getPreviousRoute'
+    })
   },
   methods:{
     checkContenido(){
@@ -102,19 +105,36 @@ export default {
           this.uploadFile(reportData.data.report.id_reporte)
         }
       }
-    }
+    },
+    returnRoute(){
+      let route = '/tickets'
+      if (this.getPreviousRoute !== ''){
+        route = this.getPreviousRoute
+      }
+      this.$router.push({ path: route })
+    },
+    ...mapMutations({
+      storePreviousRoute: 'sideNavBar/storePreviousRoute'
+    })
   },
   async mounted() {
     if ((!this.isEditMode && !this.isNewReportMode)) {
+      this.storePreviousRoute(this.$route.path)
       this.$router.push({ path: routes.tickets })
     }
     if (this.isEditMode){
-      if (isNaN(this.$route.query.edit)) this.$router.push({ path: routes.tickets })
+      if (isNaN(this.$route.query.edit)) {
+        this.storePreviousRoute(this.$route.path)
+        this.$router.push({ path: routes.tickets })
+      }
       this.reportID = this.$route.query.edit
       await this.fillInitialValues()
     }
     else {
-      if (isNaN(this.$route.query.new)) this.$router.push({ path: routes.tickets })
+      if (isNaN(this.$route.query.new)) {
+        this.storePreviousRoute(this.$route.path)
+        this.$router.push({ path: routes.tickets })
+      }
       this.ticketID = this.$route.query.new
     }
   },

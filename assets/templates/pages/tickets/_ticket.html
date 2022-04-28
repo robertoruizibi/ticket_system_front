@@ -4,6 +4,7 @@
     <ticket-form />
   </template>
   <template v-else>
+    <p @click="returnRoute">Volver atrás</p>
     <button @click="editTicket">Editar ticket</button>
     <ul>
       <li v-for="(report, index) in reports">

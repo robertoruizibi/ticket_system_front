@@ -1,5 +1,6 @@
 <div>
   {{ title }}
+  <p @click="returnRoute">Volver atrás</p>
   <form enctype='multipart/form-data' @submit.prevent="submitForm">
     <!-- Titulo -->
     <input type="text" name="titulo" id="titulo" v-model="titulo"placeholder="Título ticket" @blur="checkTitle">

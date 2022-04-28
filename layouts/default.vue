@@ -9,16 +9,26 @@ import { mapGetters } from 'vuex'
 import { isObjEmpty } from '~/utils/common'
 
 export default {
+  watch: {
+    getPreviousRoute(newVal, oldVal){
+      console.log('newVal', newVal);
+    }
+  },
   component: {
     navBar,
     sideNavBar
   },
   computed:{
+    hideSideNavBar(){
+      return (this.$vssWidth < 767) ? this.sideNavBarState : false
+    },
     isLoginPath(){
       return this.$route.path === routes.index
     },
     ...mapGetters({
-      loggedUser: 'user/getUser'
+      loggedUser: 'user/getUser',
+      sideNavBarState: 'sideNavBar/getSideNavBar',
+      getPreviousRoute: 'sideNavBar/getPreviousRoute'
     })
   },
   mounted(){

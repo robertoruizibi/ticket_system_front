@@ -5,7 +5,7 @@ import routes from '~/config/routes'
 import config from '~/config'
 import get from 'lodash/get'
 import { checkRol } from '~/utils/common'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import { deleteUser } from '~/lib/api'
 import { isArrayEmpty } from '~/utils/common'
 import { getUserTickets, getTicketDates, deleteTicket } from '~/lib/api'
@@ -33,7 +33,8 @@ export default {
       return Math.ceil(this.maxTickets / 10) 
     },
     ...mapGetters({
-      loggedUser: 'user/getUser'
+      loggedUser: 'user/getUser',
+      getPreviousRoute: 'sideNavBar/getPreviousRoute'
     })
   },
   methods: {
@@ -49,6 +50,7 @@ export default {
     async changePage(pageIndex){
       this.desde = (pageIndex - 1) * 10
       this.checkFilter()
+      this.storePreviousRoute(this.$route.path)
       this.$router.push({ path: `${routes.tickets}?desde=${this.desde}` })
       await this.checkDesdeSurpassedMaxTickets()
     },
@@ -56,11 +58,13 @@ export default {
     async checkDesdeSurpassedMaxTickets(){
       if (this.desde > this.maxTickets) {
         await this.getUserTickets('date', 'asc', 0)
+        this.storePreviousRoute(this.$route.path)
         this.$router.push({ path: routes.tickets })
       }
     },
 
     createNewTicket(){
+      this.storePreviousRoute(this.$route.path)
       this.$router.push({ path: routes.newTicket })
     },
 
@@ -138,8 +142,13 @@ export default {
     },
 
     ticketsPath(id){
-      return `${routes.tickets}/${id}`
+      this.storePreviousRoute(`${routes.tickets}/${id}`)
+      this.$router.push({ path: `${routes.tickets}/${id}` })
     },
+
+    ...mapMutations({
+      storePreviousRoute: 'sideNavBar/storePreviousRoute'
+    })
   },
   async mounted(){
     checkRol(this)
