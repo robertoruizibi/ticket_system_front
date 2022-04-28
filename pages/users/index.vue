@@ -4,7 +4,7 @@
 import routes from '~/config/routes'
 import config from '~/config'
 import get from 'lodash/get'
-import { checkRol } from '~/utils/common'
+import { checkRol, loadChartData } from '~/utils/common'
 import { mapGetters, mapMutations } from 'vuex'
 import { deleteUser } from '~/lib/api'
 import { isArrayEmpty } from '~/utils/common'
@@ -122,6 +122,7 @@ export default {
     this.desde = !isNaN(this.$route.query.desde) ? this.$route.query.desde : 0 
     await this.getUsers('date', 'asc', this.desde)
     this.checkDesdeSurpassedMaxUsers()
+    loadChartData()
   }
 }
 </script>

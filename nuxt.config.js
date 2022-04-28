@@ -25,11 +25,16 @@ export default {
         rel: "stylesheet",
         href:
           "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      },
+      {
+        rel: "stylesheet",
+        href:
+          "https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"
       }
     ],
     script: [
       {
-        src: "https://code.jquery.com/jquery-3.3.1.slim.min.js",
+        src: "https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js",
         type: "text/javascript"
       },
       {
@@ -40,6 +45,11 @@ export default {
       {
         src:
           "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js",
+        type: "text/javascript"
+      },
+      {
+        src:
+          "https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js",
         type: "text/javascript"
       }
     ]
@@ -63,7 +73,7 @@ export default {
     { src: '~/plugins/axios' },
     { src: '~/plugins/fontawesome.js' },
     { src: '~/js/sb-admin-2.min.js' },
-    { src: '~/plugins/mixins.js'}
+    { src: '~/plugins/mixins.js'},
     // { src: '~/plugins/jquery.min.js' },
     // { src: '~/plugins/jquery.easing.min.js' },
     // { src: '~/plugins/bootstrap.bundle.min.js' },

@@ -138,7 +138,7 @@ export default {
             }
             if (this.image !== ''){
               let id = get(this.$route.params, 'users', null)
-              this.uploadImage()
+              this.uploadImage(id)
             }
           }
           
