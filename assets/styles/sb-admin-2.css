@@ -362,8 +362,16 @@ progress {
   -webkit-appearance: button;
 }
 
+.padding-top-0 {
+  padding-top: 0 !important;
+}
+
 output {
   display: inline-block;
+}
+
+.h-0 {
+  height: 0;
 }
 
 .hoverNone {
@@ -376,7 +384,7 @@ output {
 }
 
 .pointer {
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 .blue {
@@ -1536,7 +1544,7 @@ pre code {
 .table th,
 .table td {
   padding: 0.75rem;
-  vertical-align: top;
+  vertical-align: inherit;
   border-top: 1px solid #e3e6f0;
 }
 
@@ -10214,8 +10222,8 @@ a:focus {
 
 .sidebar .nav-item .nav-link .img-profile,
 .topbar .nav-item .nav-link .img-profile {
-  height: 2rem;
-  width: 2rem;
+  height: 3rem;
+  width: 3rem;
 }
 
 .topbar {

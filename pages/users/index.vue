@@ -109,6 +109,11 @@ export default {
       this.search = ''
     },
 
+    usersEditPath(id){
+      this.storePreviousRoute(`${routes.users}`)
+      this.$router.push({ path: `${routes.users}/${id}?edit=true` })
+    },
+
     usersPath(id){
       return `${routes.users}/${id}`
     },

@@ -136,7 +136,7 @@ export default {
             id_ticket: ticketData.data.ticket.id_ticket
           }
           let data = await createTicketDate(this, date)
-        if (data.status && data.status === 200) this.createdSuccessfully = true
+          if (data.status && data.status === 200) this.createdSuccessfully = true
         }
       } else {
         let id = get(this.$route.params, 'ticket', null)

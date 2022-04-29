@@ -1,48 +1,11 @@
-<div class="container-fluid">
-  <!-- <div>
-    <input type="text" v-model="search">
-    <button @click="searchUser">Buscar</button>
-    <button @click="resetUser" v-if="search.length > 0">Restablecer</button>
-
-    <select name="filter" id="filter" v-model="filter">
-      <option value="name&asc">Nombre A-Z</option>
-      <option value="name&desc">Nombre Z-A</option>
-      <option value="email&asc">Email A-Z</option>
-      <option value="email&desc">Email Z-A</option>
-      <option value="enabled&asc">Habilitados ↑</option>
-      <option value="enabled&desc">Habilitados ↓</option>
-      <option value="date&asc">Fecha ↑</option>
-      <option value="date&desc">Fecha ↓</option>
-    </select>
-
-    <button @click="createNewUser">Añadir usuario</button>
-
-    <section>
-      <ul>
-        <li v-for="(user, index) in users">
-          <img :src="getImage(user.image)" />
-          <span>{{ user.nombre_organizacion }}</span>
-          <span>{{ user.email }}</span>
-          <NuxtLink :to="usersPath(user.id_usuario)">Edit</NuxtLink>
-          <button @click="deleteUser(user.id_usuario)">Delete</button>
-        </li>
-      </ul>
-    </section>
-
-    <section>
-			<ul>
-        <li v-for="index in numPages" :key="index" @click="changePage(index)">{{ index }}</li>
-			</ul>
-		</section>
-  </div> -->
-  <!-- DataTales Example -->
+<div class="container">
   <div class="card shadow mb-4">
     <div class="card-header py-3" style="    display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;">
       <h6 class="m-0 font-weight-bold text-primary">Usuarios registrados</h6>
-      <button @click="createNewUser">Añadir usuario</button>
+      <button @click="createNewUser" class="btn btn-primary">Añadir usuario</button>
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -79,9 +42,10 @@
               </td>
               <td>{{ user.nombre_organizacion }}</td>
               <td>{{ user.email }}</td>
-              <td class="text-center green pointer">
+              <td class="text-center green pointer " ><span @click="usersEditPath(user.id_usuario)"><font-awesome-icon icon="fa-solid fa-pen-to-square" /></span></td>
+              <!-- <td class="text-center green pointer">
                 <NuxtLink :to="usersPath(user.id_usuario)"><font-awesome-icon icon="fa-solid fa-pen-to-square" /></NuxtLink>
-              </td>
+              </td> -->
               <td class="text-center red pointer"><span @click="deleteUser(user.id_usuario)"><font-awesome-icon icon="fa-solid fa-trash-can" /></span></td>
             </tr>
           </tbody>

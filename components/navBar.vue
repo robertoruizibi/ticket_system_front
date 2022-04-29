@@ -32,7 +32,7 @@ export default {
     imageUrl() {
       const url = config.api.upload
       const api = config.apiURL
-      return `${api}${url}/fotoPerfil/${this.loggedUser.imagen}?x-auth=${localStorage.getItem('token')}`
+      return `${api}${url}/fotoPerfil/${this.loggedUser.image}?x-auth=${localStorage.getItem('token')}`
     },
     ...mapGetters({
       loggedUser: 'user/getUser',

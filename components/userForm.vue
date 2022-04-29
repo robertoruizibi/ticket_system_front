@@ -2,6 +2,7 @@
 
 <script>
 import get from 'lodash/get'
+import config from '~/config'
 import routes from '~/config/routes'
 import { checkRol } from '~/utils/common'
 import { mapGetters, mapMutations } from 'vuex'
@@ -11,6 +12,10 @@ import { getUser, createUser, updateUser, updatePassword, uploadFile } from '~/l
 export default {
   data() {
     return {
+      // result variables
+      createdSuccessfully: false,
+      updatedSuccessfully: false,
+
       // update user fields
       user: {},
       name: '',
@@ -29,7 +34,7 @@ export default {
       userExistsError: false,
       nameErrorMsg: 'El nombre de organización es obligatorio',
       emailErrorMsg: 'El email no es correcto',
-      passwordErrorMsg: 'Las contraseñas no son correctas (mínimo 8 caracteres)',
+      passwordErrorMsg: 'Las contraseñas no coinciden o no tienen mínimo 8 carácteres',
       imageErrorMsg: 'Ha habido un error al actualizar la imagen',
       userExistsErrorMsg: 'El usuario ya existe'
     }
@@ -48,7 +53,15 @@ export default {
 
     // edit user computeds
     title(){
-      return this.isNewUserMode ? 'Crear nuevo usuario' : 'Actualizar usuario'
+      return this.isNewUserMode ? 'Crear nuevo usuario' : `Actualizar ${this.user.email}`
+    },
+
+    imageName(){
+      return this.image.name ? this.image.name : 'Selecciona imagen'
+    },
+
+    userState(){
+      return this.enabled ? 'Habilitado' : 'Deshabilitado'
     },
 
     isNewUserMode(){
@@ -117,6 +130,8 @@ export default {
           if (this.image !== '' && get(userData, 'data.usuario.id_usuario', null)){
             this.uploadImage(userData.data.usuario.id_usuario)
           }
+
+          if (userData.status && userData.status === 200) this.updatedSuccessfully = true
         }
       } else {
         // si es modo edicion
@@ -132,7 +147,7 @@ export default {
             enabled: this.enabled
           }
           if (!this.nameError && !this.emailError) {
-            await updateUser(this, id, data)
+            let userData = await updateUser(this, id, data)
             if (isValidPassword(this.password1, this.password2)){
               await updatePassword(this, id, {password: this.password1})
             }
@@ -140,6 +155,8 @@ export default {
               let id = get(this.$route.params, 'users', null)
               this.uploadImage(id)
             }
+
+            if (userData.status && userData.status === 200) this.updatedSuccessfully = true
           }
           
         } else {
@@ -188,6 +205,10 @@ export default {
       if (data.error){
         this.imageError = true
       } else {
+        if (id === this.userLogged.id_usuario.toString()) {
+          const navBarImg = document.getElementById('navBarImg');
+          navBarImg.src = this.imageUrl
+        }
         this.imageError = false
       }
     },
@@ -210,13 +231,18 @@ export default {
       }
     },
 
+    loadImageUrl() {
+      const url = config.api.upload
+      const api = config.apiURL
+      this.imageUrl =  `${api}${url}/fotoPerfil/${this.user.image}?x-auth=${localStorage.getItem('token')}`
+    },
+
     ...mapMutations({
       storePreviousRoute: 'sideNavBar/storePreviousRoute'
     })
   },
 
   async mounted(){
-    console.log('getPreviousRoute', this.getPreviousRoute);
     if (this.isProfile) {
       this.checkUserProfileUpdateAvaliability()
     } else { 
@@ -225,9 +251,11 @@ export default {
     if (!this.isNewUserMode){
       await this.getUser()
       this.loadInitialValues()
+      this.loadImageUrl()
     }else {
       this.enabled = true
     }
+    
   }
 }
 </script>
