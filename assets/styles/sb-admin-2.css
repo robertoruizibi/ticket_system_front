@@ -366,6 +366,31 @@ output {
   display: inline-block;
 }
 
+.hoverNone {
+  text-decoration: none !important;
+  color: #4373df !important;
+}
+
+.link-color:hover {
+  color: #4373df !important;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.blue {
+  color: #4373df !important;
+}
+
+.green {
+  color: #17a673;
+}
+
+.red {
+  color: #ea4335;
+}
+
 summary {
   display: list-item;
   cursor: pointer;

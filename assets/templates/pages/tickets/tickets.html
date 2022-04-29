@@ -1,48 +1,11 @@
 <div class="container">
-  <!-- <div>
-
-    <input type="text" v-model="search">
-    <button @click="searchTicket">Buscar</button>
-    <button @click="resetTicket" v-if="search.length > 0">Restablecer</button>
-
-    <select name="filter" id="filter" v-model="filter">
-      <option value="title&asc">Nombre A-Z</option>
-      <option value="title&desc">Nombre Z-A</option>
-      <option value="enabled&asc">Abiertos ↑</option>
-      <option value="enabled&desc">Abiertos ↓</option>
-      <option value="date&asc">Fecha ↑</option>
-      <option value="date&desc">Fecha ↓</option>
-      <option value="priority&asc">Prioridad ↑</option>
-      <option value="priority&desc">Prioridad ↓</option>
-    </select>
-
-    <button @click="createNewTicket">Añadir ticket</button>
-
-    <ul>
-      <li v-for="(ticket, index) in tickets">
-        <span>{{ ticket.titulo }}</span>
-        <span>{{ getParsedDate(ticket.dates) }}</span>
-        <span>Estado: {{ estado(ticket.enabled) }}</span>
-        <span>Prioridad: {{ ticket.prioridad }}</span>
-        <span @click="ticketsPath(ticket.id_ticket)">Edit</span>
-        <button @click="deleteTicket(ticket.id_ticket)">Delete</button>
-      </li>
-    </ul>
-
-    <section>
-			<ul>
-        <li v-for="index in numPages" :key="index" @click="changePage(index)">{{ index }}</li>
-			</ul>
-		</section>
-  </div> -->
-
   <div class="card shadow mb-4">
     <div class="card-header py-3" style="    display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;">
       <h6 class="m-0 font-weight-bold text-primary">Tickets existentes</h6>
-      <button @click="createNewTicket" style="float: right;">Añadir ticket</button>
+      <button @click="createNewTicket" class="btn btn-primary">Añadir ticket</button>
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -53,18 +16,20 @@
               <th>Fecha</th>
               <th>Activo</th>
               <th>Prioridad</th>
+              <th>Ver reportes</th>
               <th>Editar</th>
               <th>Borrar</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(ticket, index) in tickets">
-              <td><span @click="ticketsPath(ticket.id_ticket)">{{ ticket.titulo }}</span></td>
+              <td><span @click="ticketsPath(ticket.id_ticket)" class="pointer link-color">{{ ticket.titulo }}</span></td>
               <td>{{ getParsedDate(ticket.dates) }}</td>
               <td>Estado: {{ estado(ticket.enabled) }}</td>
               <td>Prioridad: {{ ticket.prioridad }}</td>
-              <td style="text-align: center;"><span @click="ticketsPath(ticket.id_ticket)"><font-awesome-icon icon="fa-solid fa-pen-to-square" /></span></td>
-              <td style="text-align: center;"><span @click="deleteTicket(ticket.id_ticket)"><font-awesome-icon icon="fa-solid fa-trash-can" /></span></td>
+              <td class="text-center blue pointer"><span @click="ticketsPath(ticket.id_ticket)"><font-awesome-icon icon="fa-solid fa-eye" /></span></td>
+              <td class="text-center green pointer"><span @click="ticketsEditPath(ticket.id_ticket)"><font-awesome-icon icon="fa-solid fa-pen-to-square" /></span></td>
+              <td class="text-center red pointer"><span @click="deleteTicket(ticket.id_ticket)"><font-awesome-icon icon="fa-solid fa-trash-can" /></span></td>
             </tr>
           </tbody>
         </table>

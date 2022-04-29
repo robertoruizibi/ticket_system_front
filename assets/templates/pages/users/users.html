@@ -79,10 +79,10 @@
               </td>
               <td>{{ user.nombre_organizacion }}</td>
               <td>{{ user.email }}</td>
-              <td style="text-align: center;">
+              <td class="text-center green pointer">
                 <NuxtLink :to="usersPath(user.id_usuario)"><font-awesome-icon icon="fa-solid fa-pen-to-square" /></NuxtLink>
               </td>
-              <td style="text-align: center;"><span @click="deleteUser(user.id_usuario)"><font-awesome-icon icon="fa-solid fa-trash-can" /></span></td>
+              <td class="text-center red pointer"><span @click="deleteUser(user.id_usuario)"><font-awesome-icon icon="fa-solid fa-trash-can" /></span></td>
             </tr>
           </tbody>
         </table>

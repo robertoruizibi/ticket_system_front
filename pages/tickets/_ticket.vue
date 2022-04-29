@@ -79,8 +79,9 @@ export default {
     })
   },
   async mounted(){
+    if (this.$route.query.edit) this.editMode = true  
     this.ticketID = this.$route.params.ticket
-    await this.getReports()    
+    await this.getReports()  
   }
 }
 </script>

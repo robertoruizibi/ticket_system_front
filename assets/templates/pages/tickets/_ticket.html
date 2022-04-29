@@ -1,7 +1,6 @@
 <div>
   <template v-if="editMode">
-    <button @click="detailsTicket">Volver a detalles ticket</button>
-    <ticket-form />
+    <ticket-form @returnDetails="detailsTicket" />
   </template>
   <template v-else>
     <p @click="returnRoute">Volver atrás</p>

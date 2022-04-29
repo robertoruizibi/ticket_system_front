@@ -11,6 +11,10 @@ import { getUsers, updateTicket, getTicket, createTicket, createTicketDate } fro
 export default {
   data() {
     return {
+      // result variables
+      createdSuccessfully: false,
+      updatedSuccessfully: false,
+
       // users
       usuariosResponsable: [],
       usuariosCliente: [],
@@ -32,7 +36,7 @@ export default {
       responsableError: false,
       clienteError: false,
       tituloErrorMsg: 'El titulo de organización es obligatorio',
-      tituloMaxCarMsg: 'El título debe tener como máximo 30 caracteres',
+      tituloMaxCarMsg: 'El título debe tener como máximo 100 caracteres',
       prioridadErrorMsg: 'La prioridad es obligatoria',
       responsableErrorMsg: 'El responsable es obligatorio',
       clienteErrorMsg: 'El cliente es obligatorio',
@@ -54,7 +58,7 @@ export default {
   },
   methods: {
     checkTituloMaxCar(){
-       if (this.titulo.length > 30){
+       if (this.titulo.length > 100){
         this.tituloMaxCar = true
       } else {
         this.tituloMaxCar = false
@@ -131,11 +135,13 @@ export default {
             ultima_fecha_consulta_cliente: null,
             id_ticket: ticketData.data.ticket.id_ticket
           }
-          await createTicketDate(this, date)
+          let data = await createTicketDate(this, date)
+        if (data.status && data.status === 200) this.createdSuccessfully = true
         }
       } else {
         let id = get(this.$route.params, 'ticket', null)
-        await updateTicket(this, id, this.ticket)
+        let data = await updateTicket(this, id, this.ticket)
+        if (data.status && data.status === 200) this.updatedSuccessfully = true
       }
     },
     returnRoute(){
@@ -144,6 +150,9 @@ export default {
         route = this.getPreviousRoute
       }
       this.$router.push({ path: route })
+    },
+    returnToTicket(){
+      this.$emit('returnDetails')
     },
     ...mapMutations({
       storePreviousRoute: 'sideNavBar/storePreviousRoute'

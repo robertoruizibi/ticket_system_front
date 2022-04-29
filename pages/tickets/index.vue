@@ -146,6 +146,11 @@ export default {
       this.$router.push({ path: `${routes.tickets}/${id}` })
     },
 
+    ticketsEditPath(id){
+      this.storePreviousRoute(`${routes.tickets}`)
+      this.$router.push({ path: `${routes.tickets}/${id}?edit=true` })
+    },
+
     ...mapMutations({
       storePreviousRoute: 'sideNavBar/storePreviousRoute'
     })
