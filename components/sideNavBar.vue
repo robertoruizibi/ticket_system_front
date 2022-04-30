@@ -15,7 +15,24 @@ export default {
       actualOptions: []
     }
   },
+  watch: {
+    width(newVal, oldVal){
+      if (newVal > 767) {
+        this.storeSideNavBar = true
+      }
+    }
+    
+  },
+  props:{
+    hideSideNavBar:{
+      type: Boolean,
+      default: false
+    }
+  },
   computed:{
+    width(){
+      return this.$vssWidth
+    },
     actualPath(){
       return this.$route.path
     },

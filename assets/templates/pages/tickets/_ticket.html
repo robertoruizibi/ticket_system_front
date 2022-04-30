@@ -19,17 +19,24 @@
 
 <div class="container">
   <div class="card shadow mb-4">
-    <div class="card-header py-3" style="    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;">
-      <h6 class="m-0 font-weight-bold text-primary">{{ticket.titulo}}</h6>
-      <span>Creado el: {{getParsedDate(ticket.dates)}}</span>
-      <span>Prioridad: {{ticket.prioridad}}</span>
-      <button class="btn btn-primary" @click="shareTicket">
-        Compartir&nbsp;
-        <font-awesome-icon icon="fa-solid fa-share-nodes" />
-      </button>
+    <div class="row align-items-baseline m-4">
+      <div class="col-lg-5 col-sm-12">
+        <p><h6 class="m-0 font-weight-bold text-primary">{{ticket.titulo}}</h6></p>
+      </div>
+      <div class="col-lg-3 col-sm-12">
+        <p><span>Creado el: {{getParsedDate(ticket.dates)}}</span></p>
+      </div>
+      <div class="col-lg-2 col-sm-12">
+        <p><span>Prioridad: {{ticket.prioridad}}</span></p>
+      </div>
+      <div class="col-lg-2 col-sm-12 pointer">
+        <p>
+          <button class="btn btn-primary" @click="shareTicket">
+            Compartir&nbsp;
+            <font-awesome-icon icon="fa-solid fa-share-nodes" />
+          </button>
+        </p>
+      </div>
     </div>
  
     <div v-for="(report, index) in reports" class="card shadow mt-4 ml-4 mr-4 p-3" :class="{'mb-4': index === reports.length-1}">
@@ -45,7 +52,7 @@
         <div class="col-lg-2 col-sm-12">
           <p>{{ getParsedDate(report.fecha_creacion) }}</p>
         </div>
-        <div class="col-lg-2 col-sm-12 text-center pointer">
+        <div class="col-lg-2 col-sm-12 text-center pointer inherit">
           <button class="btn btn-primary" @click="reportsEditPath(report.id_reporte)">
             <font-awesome-icon icon="fa-solid fa-pen-to-square" />
           </button>&nbsp;

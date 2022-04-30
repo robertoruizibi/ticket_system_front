@@ -2,18 +2,20 @@
 <ul class="navbar-nav bg-gradient-dark sidebar collapsed sidebar-dark accordion" id="accordionSidebar">
 
   <!-- Sidebar - Brand -->
-  <a class="sidebar-brand d-flex align-items-center justify-content-center" style="cursor: pointer;" @click="redirectToOption('Tickets')">
-    <div class="sidebar-brand-icon rotate-n-15">
-      <i class="fa fa-spinner"></i>
+  <a class="sidebar-brand d-flex align-items-center justify-content-center pointer" @click="redirectToOption('Tickets')">
+    <div v-if="!hideSideNavBar" class="sidebar-brand-text mx-3">
+      <img src="~/static/logo-garcia-ucles.png" alt="Moldes García Uclés en Ibi Logo" class="fusion-standaoldes-logord-logo m w-100">
     </div>
-    <div class="sidebar-brand-text mx-3 text-white"><img src="https://moldesgarciaucles.com/wp-content/uploads/2021/10/logo-garcia-ucles.png" srcset="https://moldesgarciaucles.com/wp-content/uploads/2021/10/logo-garcia-ucles.png 1x, https://moldesgarciaucles.com/wp-content/uploads/2021/10/logo-2x.png 2x" alt="Moldes García Uclés en Ibi Logo" data-retina_logo_url="https://moldesgarciaucles.com/wp-content/uploads/2021/10/logo-2x.png" class="fusion-standard-logo moldes-logo"></div>
+    <div v-else class="sidebar-brand-text mx-3">
+      <img src="~/static/logo-garcia-ucles-mini.png" alt="Moldes García Uclés en Ibi Logo" class="fusion-standaoldes-logord-logo m w-100">
+    </div>
   </a>
 
   <!-- Divider -->
   <hr class="sidebar-divider my-0">
 
   <!-- Nav Item - Dashboard -->
-  <li style="font-size: 1.5em;" class="nav-item mt-4" v-for="(option, index) in actualOptions" @click="redirectToOption(option)">
+  <li style="font-size: 1.5em;" class="nav-item text-center mt-4" :class="{'ml-2': width > 767, 'mr-2': width <= 767}" v-for="(option, index) in actualOptions" @click="redirectToOption(option)">
     <a class="nav-link" style="cursor: pointer">
       <template v-if="checkSelected(option)">
         <font-awesome-icon :icon="checkIcon(option)" style="color: #ffaa06;" />&nbsp;

@@ -9,11 +9,6 @@ import { mapGetters } from 'vuex'
 import { isObjEmpty } from '~/utils/common'
 
 export default {
-  watch: {
-    getPreviousRoute(newVal, oldVal){
-      console.log('newVal', newVal);
-    }
-  },
   component: {
     navBar,
     sideNavBar

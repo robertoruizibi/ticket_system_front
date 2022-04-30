@@ -1,6 +1,6 @@
 <div>
   <div id="wrapper">
-    <side-nav-bar v-if="!isLoginPath && !hideSideNavBar" />
+    <side-nav-bar v-if="!isLoginPath && !hideSideNavBar" :hide-side-nav-bar="$vssWidth < 767"/>
     <div id="content-wrapper" class="d-flex flex-column">
       <div id="content">
         <nav-bar v-if="!isLoginPath" />
