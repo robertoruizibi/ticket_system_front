@@ -11,6 +11,10 @@ import { createReport, uploadFile, getSingleReport, updateReport, deleteFile } f
 export default {
   data() {
     return {
+      // result variables
+      createdSuccessfully: false,
+      updatedSuccessfully: false,
+
       reportID: '',
       ticketID: '',
       contenido: '',
@@ -31,6 +35,7 @@ export default {
       return this.isEditMode ? 'Editar reporte' : 'Crear reporte'
     },
     fileName(){
+      if (this.archivoAdjunto) return this.archivoAdjunto
       return this.file.name ? this.file.name : 'Selecciona fichero'
     },
     isEditMode(){
@@ -93,9 +98,10 @@ export default {
         if (this.file !== '' && get(reportData, 'data.report.id_reporte', null)){
           this.uploadFile(this.reportID)
         }
-        if (this.file === '' && this.archivoAdjunto !== '') {
+        if (this.file === '' && this.archivoAdjunto === '') {
           await deleteFile(this, 'ficheroReporte', this.archivoAdjunto)
         }
+        if (reportData.status && reportData.status === 200) this.updatedSuccessfully = true
       } else {
         this.report = {
           contenido: this.contenido,
@@ -107,12 +113,15 @@ export default {
         if (this.file !== '' && get(reportData, 'data.report.id_reporte', null)){
           this.uploadFile(reportData.data.report.id_reporte)
         }
+        if (reportData.status && reportData.status === 200) this.createdSuccessfully = true
       }
     },
     returnRoute(){
       let route = '/tickets'
       if (this.getPreviousRoute !== ''){
         route = this.getPreviousRoute
+      }else {
+        route = `/tickets/${this.ticketID}`
       }
       this.$router.push({ path: route })
     },

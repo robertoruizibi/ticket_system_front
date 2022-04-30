@@ -236,7 +236,6 @@ export default {
       const url = config.api.upload
       const api = config.apiURL
       this.imageUrl =  `${api}${url}/fotoPerfil/${this.user.image}?x-auth=${localStorage.getItem('token')}`
-      console.log("🚀 ~ file: userForm.vue ~ line 239 ~ loadImageUrl ~ this.imageUrl", this.imageUrl)
     },
 
     loadProfileImageUrl(){

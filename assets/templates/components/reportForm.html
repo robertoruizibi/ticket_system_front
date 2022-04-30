@@ -14,8 +14,8 @@
             <div class="text-center">
               <h1 class="h4 text-gray-900 mb-4">{{title}}</h1>
             </div>
-            <!-- <p v-if="updatedSuccessfully" class="alert alert-success">Se ha actualizado el reporte</p>
-            <p v-if="createdSuccessfully" class="alert alert-success">Se ha creado el reporte</p> -->
+            <p v-if="updatedSuccessfully" class="alert alert-success">Se ha actualizado el reporte</p>
+            <p v-if="createdSuccessfully" class="alert alert-success">Se ha creado el reporte</p>
             <form class="user" @submit.prevent="submitForm">
               <div class="form-group">
                 <!-- Contenido -->
@@ -23,7 +23,7 @@
                 <textarea class="form-control" rows="8" name="contenido" id="contenido" v-model="contenido"placeholder="Escribe aquí el contenido de tu reporte..." @blur="checkContenido" />
                 <br>
                 <p v-if="contenidoError">{{contenidoErrorMsg}}</p>
-                <br>
+                
                 <!-- Fichero -->
                 <label for="customFile">Fichero:</label>
                 <div class="w-100 position-relative">
