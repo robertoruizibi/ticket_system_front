@@ -13,7 +13,8 @@ export default {
       email: '',
       password: '',
       loginError: false,
-      loginMessage: 'Usuario o contraseña incorrectos'
+      loginMessage: 'Usuario o contraseña incorrectos',
+      rememberMe: false
     }
   },
   computed: {
@@ -22,6 +23,19 @@ export default {
     })
   },
   methods: {
+    checkRememberMeSubmit(){
+     if (this.rememberMe) {
+       localStorage.setItem('userRemember', this.email)
+     } else {
+       localStorage.setItem('userRemember', '')
+     }
+    },
+    checkRememberMeOnLoad(){
+      this.email = localStorage.getItem('userRemember')
+      if (this.email !== ''){
+        this.rememberMe = true
+      }
+    },
     async loginUser(){
       let response = await login(this, this.email, this.password)
       if (!isObjEmpty(get(response, 'error', {}))) {
@@ -29,6 +43,7 @@ export default {
       }else {
         this.loginError = false
         if (get(response, 'data.user.rol', '') === 'empresa') {
+          this.checkRememberMeSubmit()
           this.$router.push({ path: routes.users })
         }else {
           this.$router.push({ path: routes.tickets })
@@ -38,6 +53,7 @@ export default {
   },
   mounted(){
     checkRolInLogin(this)
+    this.checkRememberMeOnLoad()
   }
 }
 </script>
