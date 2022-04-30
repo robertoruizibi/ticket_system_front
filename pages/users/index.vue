@@ -21,7 +21,9 @@ export default {
       desde: 0,
       maxUsers: 0,
       actualPage: 1,
-      search: ''
+      search: '',
+
+      userToDelete: ''
     }
   },
 
@@ -72,9 +74,14 @@ export default {
       this.$router.push({ path: routes.newUser })
     },
 
-    async deleteUser(id){
-      await deleteUser(this, id)
+    deleteModal(id){
+      this.userToDelete = id
+    },
+
+    async deleteUser(){
+      await deleteUser(this, this.userToDelete)
       await this.getUsers()
+      this.deleteUser = ''
     },
 
     async getUsers(typeOrder, asc, desde){

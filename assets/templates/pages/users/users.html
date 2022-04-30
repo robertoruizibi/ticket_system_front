@@ -48,13 +48,31 @@
               </button>
               </td>
               <td class="text-center pointer">
-                <button class="btn btn-primary" @click="deleteUser(user.id_usuario)">
+                <button class="btn btn-primary" @click="deleteModal(user.id_usuario)" data-toggle="modal" data-target="#deleteModal">
                   <font-awesome-icon icon="fa-solid fa-trash-can" />
                 </button>
               </td>
             </tr>
           </tbody>
         </table>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">¿Deseas eliminar este usuario?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Selecciona "Eliminar" si realmente deseas eliminar este usuario</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" @click="deleteUser"  data-dismiss="modal">Eliminar</a>
+        </div>
       </div>
     </div>
   </div>
