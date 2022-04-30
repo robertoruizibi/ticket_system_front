@@ -52,7 +52,7 @@
         <div class="col-lg-2 col-sm-12">
           <p>{{ getParsedDate(report.fecha_creacion) }}</p>
         </div>
-        <div class="col-lg-2 col-sm-12 text-center pointer inherit">
+        <div class="col-lg-2 col-sm-12 pointer ">
           <button class="btn btn-primary" @click="reportsEditPath(report.id_reporte)">
             <font-awesome-icon icon="fa-solid fa-pen-to-square" />
           </button>&nbsp;
@@ -62,6 +62,9 @@
         </div>
       </div>      
     </div>
+
+    <hr>
+    
     <div class="flex" style="display: flex; justify-content: flex-end;">
       <button @click="addReport" class="btn btn-primary mb-4 mr-4">
         <font-awesome-icon icon="fa-solid fa-plus" />
