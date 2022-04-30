@@ -27,9 +27,21 @@
               <td>{{ getParsedDate(ticket.dates) }}</td>
               <td>Estado: {{ estado(ticket.enabled) }}</td>
               <td>Prioridad: {{ ticket.prioridad }}</td>
-              <td class="text-center blue pointer"><span @click="ticketsPath(ticket.id_ticket)"><font-awesome-icon icon="fa-solid fa-eye" /></span></td>
-              <td class="text-center green pointer"><span @click="ticketsEditPath(ticket.id_ticket)"><font-awesome-icon icon="fa-solid fa-pen-to-square" /></span></td>
-              <td class="text-center red pointer"><span @click="deleteTicket(ticket.id_ticket)"><font-awesome-icon icon="fa-solid fa-trash-can" /></span></td>
+              <td class="text-center pointer">
+                <button class="btn btn-primary"  @click="ticketsPath(ticket.id_ticket)">
+                  <font-awesome-icon icon="fa-solid fa-eye" />
+                </button>
+              </td>
+              <td class="text-center pointer">
+                <button class="btn btn-primary" @click="ticketsEditPath(ticket.id_ticket)">
+                  <font-awesome-icon icon="fa-solid fa-pen-to-square" />
+                </button>
+              </td>
+              <td class="text-center pointer">
+                <button class="btn btn-primary" @click="deleteTicket(ticket.id_ticket)">
+                  <font-awesome-icon icon="fa-solid fa-trash-can" />
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>

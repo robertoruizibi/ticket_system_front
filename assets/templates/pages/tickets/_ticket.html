@@ -1,10 +1,10 @@
-<div>
+<!-- <div>
   <template v-if="editMode">
     <ticket-form @returnDetails="detailsTicket" />
   </template>
   <template v-else>
     <p @click="returnRoute">Volver atrás</p>
-    <!-- <button @click="editTicket">Editar ticket</button> -->
+    
     <ul>
       <li v-for="(report, index) in reports">
         <p><span>{{ report.contenido }}</span></p>
@@ -15,4 +15,51 @@
     </ul>
     <button @click="addReport">Añadir reporte</button>
   </template>
+</div> -->
+
+<div class="container">
+  <div class="card shadow mb-4">
+    <div class="card-header py-3" style="    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;">
+      <h6 class="m-0 font-weight-bold text-primary">{{ticket.titulo}}</h6>
+      <span>Creado el: {{getParsedDate(ticket.dates)}}</span>
+      <span>Prioridad: {{ticket.prioridad}}</span>
+      <button class="btn btn-primary" @click="shareTicket">
+        Compartir&nbsp;
+        <font-awesome-icon icon="fa-solid fa-share-nodes" />
+      </button>
+    </div>
+ 
+    <div v-for="(report, index) in reports" class="card shadow mt-4 ml-4 mr-4 p-3" :class="{'mb-4': index === reports.length-1}">
+      <p class="mt-1 ml-1"><span>{{ report.contenido }}</span></p>
+      <hr>
+      <div class="row align-items-baseline">
+        <div class="col-lg-5 col-sm-12">
+          <p v-if="report.archivo_adjunto">Fichero: <a :href="report.url" download>{{ report.archivo_adjunto }}</a></p>
+        </div>
+        <div class="col-lg-3 col-sm-12">
+          <p>Reporte creado por: <span class="text-capitalize">{{ responsable.nombre_organizacion }}</span></p>
+        </div>
+        <div class="col-lg-2 col-sm-12">
+          <p>{{ getParsedDate(report.fecha_creacion) }}</p>
+        </div>
+        <div class="col-lg-2 col-sm-12 text-center pointer">
+          <button class="btn btn-primary" @click="reportsEditPath(report.id_reporte)">
+            <font-awesome-icon icon="fa-solid fa-pen-to-square" />
+          </button>&nbsp;
+          <button class="btn btn-primary" @click="deleteSingleReport(report.id_reporte)">
+            <font-awesome-icon icon="fa-solid fa-trash-can" />
+           </button>
+        </div>
+      </div>      
+    </div>
+    <div class="float-right">
+      <button @click="addReport" class="btn btn-primary mb-4 mr-4">
+        <font-awesome-icon icon="fa-solid fa-plus" />
+        Añadir reporte
+      </button>
+    </div>
+  </div>
 </div>

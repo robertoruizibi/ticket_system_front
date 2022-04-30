@@ -42,11 +42,16 @@
               </td>
               <td>{{ user.nombre_organizacion }}</td>
               <td>{{ user.email }}</td>
-              <td class="text-center green pointer " ><span @click="usersEditPath(user.id_usuario)"><font-awesome-icon icon="fa-solid fa-pen-to-square" /></span></td>
-              <!-- <td class="text-center green pointer">
-                <NuxtLink :to="usersPath(user.id_usuario)"><font-awesome-icon icon="fa-solid fa-pen-to-square" /></NuxtLink>
-              </td> -->
-              <td class="text-center red pointer"><span @click="deleteUser(user.id_usuario)"><font-awesome-icon icon="fa-solid fa-trash-can" /></span></td>
+              <td class="text-center pointer">
+                <button class="btn btn-primary" @click="usersEditPath(user.id_usuario)">
+                <font-awesome-icon icon="fa-solid fa-pen-to-square" />
+              </button>
+              </td>
+              <td class="text-center pointer">
+                <button class="btn btn-primary" @click="deleteUser(user.id_usuario)">
+                  <font-awesome-icon icon="fa-solid fa-trash-can" />
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
