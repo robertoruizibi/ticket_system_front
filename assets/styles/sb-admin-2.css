@@ -376,7 +376,7 @@ output {
 
 .hoverNone {
   text-decoration: none !important;
-  color: #4373df !important;
+  /* color: #4373df !important; */
 }
 
 .link-color:hover {

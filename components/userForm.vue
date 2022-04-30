@@ -53,6 +53,7 @@ export default {
 
     // edit user computeds
     title(){
+      if (this.isProfile) return 'Actualizar perfil'
       return this.isNewUserMode ? 'Crear nuevo usuario' : `Actualizar ${this.user.email}`
     },
 
@@ -235,6 +236,13 @@ export default {
       const url = config.api.upload
       const api = config.apiURL
       this.imageUrl =  `${api}${url}/fotoPerfil/${this.user.image}?x-auth=${localStorage.getItem('token')}`
+      console.log("🚀 ~ file: userForm.vue ~ line 239 ~ loadImageUrl ~ this.imageUrl", this.imageUrl)
+    },
+
+    loadProfileImageUrl(){
+      const url = config.api.upload
+      const api = config.apiURL
+      this.imageUrl =  `${api}${url}/fotoPerfil/${this.userLogged.image}?x-auth=${localStorage.getItem('token')}`
     },
 
     ...mapMutations({
@@ -245,13 +253,14 @@ export default {
   async mounted(){
     if (this.isProfile) {
       this.checkUserProfileUpdateAvaliability()
+      this.loadProfileImageUrl()
     } else { 
       checkRol(this) 
+       this.loadImageUrl()
     }
     if (!this.isNewUserMode){
       await this.getUser()
       this.loadInitialValues()
-      this.loadImageUrl()
     }else {
       this.enabled = true
     }
