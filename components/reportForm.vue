@@ -30,6 +30,9 @@ export default {
     title(){
       return this.isEditMode ? 'Editar reporte' : 'Crear reporte'
     },
+    fileName(){
+      return this.file.name ? this.file.name : 'Selecciona fichero'
+    },
     isEditMode(){
       return this.$route.query.edit !== undefined
     },

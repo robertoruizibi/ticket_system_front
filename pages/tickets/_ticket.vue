@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     addReport(){
-      this.storePreviousRoute(`${this.$route.path}/${this.ticketID}`)
+      this.storePreviousRoute(`${this.$route.path}`)
       this.$router.push({ path: `${routes.reports}/?new=${this.ticketID}` })
     },
     async makeFileUrl(){
