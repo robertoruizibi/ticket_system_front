@@ -1,12 +1,3 @@
-<!-- <div>
-  <ul>
-    <li v-for="(option, index) in actualOptions" @click="redirectToOption(option)">
-      <template v-if="checkSelected(option)"><strong>{{ option }}</strong></template>
-      <template v-else>{{ option }}</template>
-    </li>
-  </ul>
-</div> -->
-
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-dark sidebar collapsed sidebar-dark accordion" id="accordionSidebar">
 
@@ -15,14 +6,14 @@
     <div class="sidebar-brand-icon rotate-n-15">
       <i class="fa fa-spinner"></i>
     </div>
-    <div class="sidebar-brand-text mx-3 text-white">Tycket System</div>
+    <div class="sidebar-brand-text mx-3 text-white"><img src="https://moldesgarciaucles.com/wp-content/uploads/2021/10/logo-garcia-ucles.png" srcset="https://moldesgarciaucles.com/wp-content/uploads/2021/10/logo-garcia-ucles.png 1x, https://moldesgarciaucles.com/wp-content/uploads/2021/10/logo-2x.png 2x" alt="Moldes García Uclés en Ibi Logo" data-retina_logo_url="https://moldesgarciaucles.com/wp-content/uploads/2021/10/logo-2x.png" class="fusion-standard-logo moldes-logo"></div>
   </a>
 
   <!-- Divider -->
   <hr class="sidebar-divider my-0">
 
   <!-- Nav Item - Dashboard -->
-  <li class="nav-item" v-for="(option, index) in actualOptions" @click="redirectToOption(option)">
+  <li style="font-size: 1.5em;" class="nav-item mt-4" v-for="(option, index) in actualOptions" @click="redirectToOption(option)">
     <a class="nav-link" style="cursor: pointer">
       <template v-if="checkSelected(option)">
         <font-awesome-icon :icon="checkIcon(option)" style="color: #ffaa06;" />&nbsp;
