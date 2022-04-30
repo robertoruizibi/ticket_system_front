@@ -1,7 +1,8 @@
 // File to manage SIDENAVBAR states
 export const state = () => ({
   sideNavBar: true,
-  previousRoute: ''
+  previousRoute: '',
+  sharedRoute: ''
 })
 
 export const getters = {
@@ -10,6 +11,9 @@ export const getters = {
   },
   getPreviousRoute: state => {
     return state.previousRoute
+  },
+  getSharedRoute: state => {
+    return state.sharedRoute
   }
 }
 export const mutations = {
@@ -18,5 +22,8 @@ export const mutations = {
   },
   storePreviousRoute(state, previousRoute) {
     state.previousRoute = previousRoute
+  },
+  setSharedRoute(state, sharedRoute) {
+    state.sharedRoute = sharedRoute
   }
 }

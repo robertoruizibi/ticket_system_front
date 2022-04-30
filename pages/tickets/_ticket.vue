@@ -50,8 +50,8 @@ export default {
     },
     async getTicketData(){
       let ticketData = await getTicket(this, this.ticketID)
-      let ticket = get(ticketData, 'data.ticket', null)
-      let dates = await this.getDates(ticket.id_ticket)
+      let ticket = get(ticketData, 'data.ticket', {})
+      let dates = await this.getDates(get(ticket, 'id_ticket', null))
       ticket.dates = dates
       this.ticket = ticket
     },
@@ -103,7 +103,7 @@ export default {
       this.$router.push({ path: route })
     },
     async shareTicket(){
-      await navigator.share({url: window.location.href})
+      await navigator.share({url: `${window.location.href}?shared=true`})
     },
     ...mapMutations({
       storePreviousRoute: 'sideNavBar/storePreviousRoute'

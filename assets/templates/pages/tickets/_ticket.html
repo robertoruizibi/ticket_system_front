@@ -1,22 +1,3 @@
-<!-- <div>
-  <template v-if="editMode">
-    <ticket-form @returnDetails="detailsTicket" />
-  </template>
-  <template v-else>
-    <p @click="returnRoute">Volver atrás</p>
-    
-    <ul>
-      <li v-for="(report, index) in reports">
-        <p><span>{{ report.contenido }}</span></p>
-        <a v-if="report.archivo_adjunto" :href="report.url" download>{{ report.archivo_adjunto }}</a>
-        <NuxtLink :to="reportsEditPath(report.id_reporte)">Edit</NuxtLink>
-        <button @click="deleteSingleReport(report.id_reporte)">Delete</button>
-      </li>
-    </ul>
-    <button @click="addReport">Añadir reporte</button>
-  </template>
-</div> -->
-
 <div class="container">
   <div class="card shadow mb-4">
     <div class="row align-items-baseline m-4">

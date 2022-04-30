@@ -9,4 +9,7 @@ export default async function authMiddleware({store, route}) {
   if (data.error && route.path !== routes.index){
     store.$router.push({ path: routes.index })
   }
+  if (route.query.shared) {
+    store.commit('sideNavBar/setSharedRoute', route.fullPath)
+  }
 }

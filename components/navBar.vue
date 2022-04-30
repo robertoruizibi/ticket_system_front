@@ -12,9 +12,6 @@ export default {
 
     }
   },
-  asyncData({ from }) {
-    console.log(from);
-  },
   computed:{
     actualPath(){
       return this.$route.path
