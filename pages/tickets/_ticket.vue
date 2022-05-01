@@ -17,7 +17,8 @@ export default {
       editMode: false,
       reports: [],
       ticket: {},
-      responsable: {},
+      responsableName: '',
+      clienteName: '',
 
       reportToDelete: ''
     }
@@ -26,6 +27,9 @@ export default {
    ticketForm
   },
   computed: {
+    width(){
+      return this.$vssWidth
+    },
     userIsAdmin(){
       return this.loggedUser.rol === 'empresa'
     },
@@ -35,11 +39,42 @@ export default {
     })
   },
   methods: {
+    parseContenidoEndline(contenido) {
+      let splitted = contenido.split('/\n/g')
+      let splitted2 = splitted[0].split('\n')
+      if (splitted2.length > 1) {
+        console.log("🚀 ~ file: _ticket.vue ~ line 48 ~ parseContenidoEndline ~ splitted2", splitted2)
+        return splitted2
+      }
+      console.log("🚀 ~ file: _ticket.vue ~ line 51 ~ parseContenidoEndline ~ splitted", splitted)
+      return splitted
+    },
+    setResponsableName(){
+      if (this.loggedUser.rol === 'empresa'){
+        this.responsableName = this.loggedUser.nombre_organizacion
+      }else {
+        this.responsableName = this.ticket.nombre_responsable
+      }
+    },
+    async setClienteName(){
+      console.log('this.loggedUser.rol', this.loggedUser.rol);
+      if (this.loggedUser.rol === 'cliente'){
+        this.clienteName = this.loggedUser.nombre_organizacion
+      } else {
+        let userData = await getUser(this, this.ticket.cliente)
+        let creadorName = get(userData, 'data.usuario.nombre_organizacion', '')
+        this.clienteName = creadorName
+      }
+    },
+    checkSameIdReport(creador){
+      return creador === this.loggedUser.id_usuario
+    },
     async changeViewed(){
       if (this.loggedUser.rol === 'cliente'){
         let reportsFiltered = this.reports.filter(report => report.visto === 0)
         reportsFiltered.forEach(async report => {
             let editReport = report
+            console.log("🚀 ~ file: _ticket.vue ~ line 67 ~ changeViewed ~ editReport", editReport)
             editReport.visto = 1
             await updateReport(this, editReport.id_reporte, editReport)
         });
@@ -58,13 +93,8 @@ export default {
     async getAllData(){
       await Promise.all([
         await this.getReports(),
-        await this.getTicketData(),
-        await this.getResponsable()
+        await this.getTicketData()
       ])
-    },
-    async getResponsable(){
-      let response = await getUser(this, this.ticket.responsable)
-      this.responsable = get(response, 'data.usuario', {})
     },
     async getTicketData(){
       let ticketData = await getTicket(this, this.ticketID)
@@ -82,6 +112,8 @@ export default {
         this.reports.map(async report => {
             const url = config.api.upload
             const api = config.apiURL
+            // let userData = await getUser(this, report.creador)
+            // let creadorName = get(userData, 'data.usuario.nombre_organizacion', '')
             return {
               url: `${api}${url}/ficheroReporte/${report.archivo_adjunto}?x-auth=${localStorage.getItem('token')}`,
               archivo_adjunto: report.archivo_adjunto,
@@ -89,7 +121,9 @@ export default {
               fecha_creacion: report.fecha_creacion,
               id_reporte: report.id_reporte,
               id_ticket: report.id_ticket,
-              visto: report.visto
+              visto: report.visto,
+              creador: report.creador,
+              nombre_creador: report.nombre_creador
             }
           })
       )
@@ -136,6 +170,8 @@ export default {
     this.ticketID = this.$route.params.ticket
     await this.getAllData()
     await this.changeViewed()
+    this.setResponsableName()
+    await this.setClienteName()
   }
 }
 </script>

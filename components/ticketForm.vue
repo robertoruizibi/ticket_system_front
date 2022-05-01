@@ -25,6 +25,7 @@ export default {
       prioridad: '',
       enabled: true,
       responsable: '',
+      nombre_responsable: '',
       cliente: '',
 
       tiposPrioridad: ['Alta', 'Media', 'Baja'],
@@ -123,15 +124,19 @@ export default {
       this.prioridad = ticket.prioridad
       this.enabled = ticket.enabled
       this.responsable = ticket.responsable
+      this.nombre_responsable = ticket.nombre_responsable
       this.cliente = ticket.cliente
       this.titulo = ticket.titulo
     },
     async submitForm() {
       this.checkValues()
       if(this.tituloError || this.prioridadError || this.responsableError || this.clienteError) return false
+      let responsable = this.usuariosResponsable.filter(user => user.id_usuario === this.responsable)
+      console.log("🚀 ~ file: ticketForm.vue ~ line 135 ~ submitForm ~ responsable", responsable)
       this.ticket = {
         prioridad: this.prioridad,
         responsable: this.responsable,
+        nombre_responsable: responsable[0].nombre_organizacion,
         cliente: this.cliente,
         titulo: this.titulo,
         enabled: this.enabled
