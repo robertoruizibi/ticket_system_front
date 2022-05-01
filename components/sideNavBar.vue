@@ -30,6 +30,14 @@ export default {
     }
   },
   computed:{
+    sideNavBar: {
+      get() {
+        return this.$store.getters['sideNavBar/getSideNavBar']
+      },
+      set(value) {
+        this.$store.commit('sideNavBar/storeSideNavBar', value)
+      }
+    },
     width(){
       return this.$vssWidth
     },
@@ -76,7 +84,7 @@ export default {
       else if (option === 'Configuración') {route = `${routes.users}/${this.loggedUser.id_usuario}?profile=true`}
       else if (option === 'Contacto') {route = routes.contact}
 
-      this.storeSideNavBar(true)
+      this.sideNavBar = true
 
       if (this.actualPath !== route){
         this.$router.push({ path: route })
