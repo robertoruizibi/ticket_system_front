@@ -34,6 +34,9 @@ export default {
     numPages(){
       return Math.ceil(this.maxTickets / 10) 
     },
+    userIsAdmin(){
+      return this.loggedUser.rol === 'empresa'
+    },
     ...mapGetters({
       loggedUser: 'user/getUser',
       getPreviousRoute: 'sideNavBar/getPreviousRoute'

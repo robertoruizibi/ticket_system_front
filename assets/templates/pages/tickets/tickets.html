@@ -4,8 +4,9 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;">
-      <h4 class="m-0 font-weight-bold text-primary">Tickets existentes</h4>
-      <button @click="createNewTicket" class="btn btn-primary">Añadir ticket</button>
+      <h4 v-if="userIsAdmin" class="m-0 font-weight-bold text-primary">Tickets existentes</h4>
+      <h4 v-if="!userIsAdmin" class="m-0 font-weight-bold text-primary">Tickets asignados</h4>
+      <button v-if="userIsAdmin" @click="createNewTicket" class="btn btn-primary">Añadir ticket</button>
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -17,8 +18,8 @@
               <th>Estado</th>
               <th>Prioridad</th>
               <th>Ver reportes</th>
-              <th>Editar</th>
-              <th>Borrar</th>
+              <th v-if="userIsAdmin">Editar</th>
+              <th v-if="userIsAdmin">Borrar</th>
             </tr>
           </thead>
           <tbody>
@@ -32,12 +33,12 @@
                   <font-awesome-icon icon="fa-solid fa-eye" />
                 </button>
               </td>
-              <td class="text-center pointer">
+              <td v-if="userIsAdmin" class="text-center pointer">
                 <button class="btn btn-primary" @click="ticketsEditPath(ticket.id_ticket)">
                   <font-awesome-icon icon="fa-solid fa-pen-to-square" />
                 </button>
               </td>
-              <td class="text-center pointer">
+              <td v-if="userIsAdmin" class="text-center pointer">
                 <button class="btn btn-primary" @click="setTicketToDelete(ticket.id_ticket)" data-toggle="modal" data-target="#deleteModal">
                   <font-awesome-icon icon="fa-solid fa-trash-can" />
                 </button>

@@ -29,10 +29,11 @@
       <template v-if="reports.length > 0">
         <div v-for="(report, index) in reports" class="card shadow mt-4 ml-4 mr-4 p-3" :class="{'mb-4': index === reports.length-1}">
           <p class="mt-1 ml-1"><span>{{ report.contenido }}</span></p>
+          <p v-if="report.archivo_adjunto">Fichero adjunto: <a :href="report.url" download>{{ report.archivo_adjunto }}</a></p>
           <hr>
           <div class="row align-items-baseline">
-            <div class="col-lg-5 col-sm-12">
-              <p v-if="report.archivo_adjunto">Fichero: <a :href="report.url" download>{{ report.archivo_adjunto }}</a></p>
+            <div v-if="userIsAdmin" class="col-lg-5 col-sm-12 text-right">
+              {{reportViewed(report.visto)}}
             </div>
             <div class="col-lg-3 col-sm-12 text-right">
               <p>Reporte creado por: <span class="text-capitalize">{{ responsable.nombre_organizacion }}</span></p>

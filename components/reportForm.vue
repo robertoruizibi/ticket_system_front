@@ -116,7 +116,7 @@ export default {
         this.report = {
           contenido: this.contenido,
           fecha_creacion: this.fechaCreacion,
-          visto: this.visto,
+          visto: false,
           id_ticket: this.ticketID
         }
         let reportData = await createReport(this, this.report)

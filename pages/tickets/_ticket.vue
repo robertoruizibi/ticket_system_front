@@ -8,7 +8,7 @@ import ticketForm from '~/components/ticketForm'
 import { checkRol } from '~/utils/common'
 import { mapGetters, mapMutations } from 'vuex'
 import { isObjEmpty, isValidPassword, isValidEmail } from '~/utils/common'
-import { getTicketReports, getFileData, deleteReport, getTicket, getTicketDates, getUser } from '~/lib/api'
+import { getTicketReports, getFileData, deleteReport, getTicket, getTicketDates, getUser, updateReport } from '~/lib/api'
 
 export default {
   data() {
@@ -26,11 +26,28 @@ export default {
    ticketForm
   },
   computed: {
+    userIsAdmin(){
+      return this.loggedUser.rol === 'empresa'
+    },
     ...mapGetters({
+      loggedUser: 'user/getUser',
       getPreviousRoute: 'sideNavBar/getPreviousRoute'
     })
   },
   methods: {
+    async changeViewed(){
+      if (this.loggedUser.rol === 'cliente'){
+        let reportsFiltered = this.reports.filter(report => report.visto === 0)
+        reportsFiltered.forEach(async report => {
+            let editReport = report
+            editReport.visto = 1
+            await updateReport(this, editReport.id_reporte, editReport)
+        });
+      }
+    },
+    reportViewed(viewed){
+      return viewed ? 'Visto por cliente' : 'No visto por cliente'
+    },
     addReport(){
       this.storePreviousRoute(`${this.$route.path}`)
       this.$router.push({ path: `${routes.reports}/?new=${this.ticketID}` })
@@ -117,7 +134,8 @@ export default {
   async mounted(){
     if (this.$route.query.edit) this.editMode = true  
     this.ticketID = this.$route.params.ticket
-    this.getAllData()
+    await this.getAllData()
+    await this.changeViewed()
   }
 }
 </script>
