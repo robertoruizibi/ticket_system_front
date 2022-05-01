@@ -36,10 +36,21 @@ export default {
       emailErrorMsg: 'El email no es correcto',
       passwordErrorMsg: 'Las contraseñas no coinciden o no tienen mínimo 8 carácteres',
       imageErrorMsg: 'Ha habido un error al actualizar la imagen',
-      userExistsErrorMsg: 'El usuario ya existe'
+      userExistsErrorMsg: 'El usuario ya existe',
     }
   },
   computed: {
+
+    // modal computed
+    modalTitle(){
+      if (this.isProfile) return '¿Actualizar perfil?'
+      return this.isNewUserMode ? `¿Crear nuevo usuario ${this.email}?` : `¿Actualizar ${this.user.email}?`
+    },
+
+    modalMessage(){
+      if (this.isProfile) return 'Selecciona "Aceptar" si realmente deseas actualizar tu perfil'
+      return this.isNewUserMode ? 'Selecciona "Aceptar" si realmente deseas crear este usuario' : `Selecciona "Aceptar" si realmente deseas actualizar ${this.user.email}?`
+    },
 
     // new user computeds
     isAdminUser(){
