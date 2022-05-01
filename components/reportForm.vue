@@ -5,12 +5,16 @@ import get from 'lodash/get'
 import config from '~/config'
 import routes from '~/config/routes'
 import { checkRol } from '~/utils/common'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import { isObjEmpty, isValidPassword, isValidEmail } from '~/utils/common'
 import { createReport, uploadFile, getSingleReport, updateReport, deleteFile } from '~/lib/api'
 export default {
   data() {
     return {
+      // result variables
+      createdSuccessfully: false,
+      updatedSuccessfully: false,
+
       reportID: '',
       ticketID: '',
       contenido: '',
@@ -19,6 +23,8 @@ export default {
       fechaCreacion: new Date(),
       archivoAdjunto: '',
       visto: true,
+      creador: '',
+      nombre_creador: '',
 
       fileError: false,
       contenidoError: false,
@@ -27,15 +33,33 @@ export default {
     }
   },
   computed:{
+    // modal computed
+    modalTitle(){
+      return !this.isEditMode ? `¿Crear nuevo reporte?` : '¿Actualizar reporte?'
+    },
+
+    modalMessage(){
+      return !this.isEditMode ? 'Selecciona "Aceptar" si realmente deseas crear este reporte' : `Selecciona "Aceptar" si realmente deseas actualizar este reporte`
+    },
+
+    // others
     title(){
       return this.isEditMode ? 'Editar reporte' : 'Crear reporte'
+    },
+    fileName(){
+      if (this.archivoAdjunto) return this.archivoAdjunto
+      return this.file.name ? this.file.name : 'Selecciona fichero'
     },
     isEditMode(){
       return this.$route.query.edit !== undefined
     },
     isNewReportMode(){
       return this.$route.query.new !== undefined
-    }
+    },
+    ...mapGetters({
+      loggedUser: 'user/getUser',
+      getPreviousRoute: 'sideNavBar/getPreviousRoute'
+    })
   },
   methods:{
     checkContenido(){
@@ -54,6 +78,8 @@ export default {
         this.archivoAdjunto = get(reportData, 'data.report.archivo_adjunto', '')
         this.visto = get(reportData, 'data.report.visto', true)
         this.ticketID = get(reportData, 'data.report.id_ticket', '')
+        this.creador = get(reportData, 'data.report.creador', '')
+        this.nombre_creador = get(reportData, 'data.report.nombre_creador', '')
       }
     },
 
@@ -81,40 +107,65 @@ export default {
           contenido: this.contenido,
           fecha_creacion: this.fechaCreacion,
           visto: this.visto,
-          id_ticket: this.ticketID
+          id_ticket: this.ticketID,
+          creador: this.creador,
+          nombre_creador: this.nombre_creador
         }
         let reportData = await updateReport(this, this.reportID, this.report)
         if (this.file !== '' && get(reportData, 'data.report.id_reporte', null)){
           this.uploadFile(this.reportID)
         }
-        if (this.file === '' && this.archivoAdjunto !== '') {
+        if (this.file === '' && this.archivoAdjunto === '') {
           await deleteFile(this, 'ficheroReporte', this.archivoAdjunto)
         }
+        if (reportData.status && reportData.status === 200) this.updatedSuccessfully = true
       } else {
         this.report = {
           contenido: this.contenido,
           fecha_creacion: this.fechaCreacion,
-          visto: this.visto,
-          id_ticket: this.ticketID
+          visto: this.loggedUser.rol === 'cliente',
+          id_ticket: this.ticketID,
+          creador: this.loggedUser.id_usuario,
+          nombre_creador: this.loggedUser.nombre_organizacion
         }
         let reportData = await createReport(this, this.report)
         if (this.file !== '' && get(reportData, 'data.report.id_reporte', null)){
           this.uploadFile(reportData.data.report.id_reporte)
         }
+        if (reportData.status && reportData.status === 200) this.createdSuccessfully = true
       }
-    }
+    },
+    returnRoute(){
+      let route = '/tickets'
+      if (this.getPreviousRoute !== ''){
+        route = this.getPreviousRoute
+      }else {
+        route = `/tickets/${this.ticketID}`
+      }
+      this.$router.push({ path: route })
+    },
+    ...mapMutations({
+      storePreviousRoute: 'sideNavBar/storePreviousRoute'
+    })
   },
   async mounted() {
     if ((!this.isEditMode && !this.isNewReportMode)) {
+      this.storePreviousRoute(this.$route.path)
       this.$router.push({ path: routes.tickets })
     }
     if (this.isEditMode){
-      if (isNaN(this.$route.query.edit)) this.$router.push({ path: routes.tickets })
+      if (isNaN(this.$route.query.edit)) {
+        this.storePreviousRoute(this.$route.path)
+        this.$router.push({ path: routes.tickets })
+      }
       this.reportID = this.$route.query.edit
       await this.fillInitialValues()
     }
     else {
-      if (isNaN(this.$route.query.new)) this.$router.push({ path: routes.tickets })
+      if (isNaN(this.$route.query.new)) {
+        this.storePreviousRoute(this.$route.path)
+        this.$router.push({ path: routes.tickets })
+      }
       this.ticketID = this.$route.query.new
     }
   },

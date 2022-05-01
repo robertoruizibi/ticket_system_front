@@ -4,7 +4,7 @@
 
 import get from 'lodash/get'
 import routes from '~/config/routes'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import { isObjEmpty } from '~/utils/common'
 
 export default {
@@ -15,7 +15,32 @@ export default {
       actualOptions: []
     }
   },
+  watch: {
+    width(newVal, oldVal){
+      if (newVal > 767) {
+        this.storeSideNavBar = true
+      }
+    }
+    
+  },
+  props:{
+    hideSideNavBar:{
+      type: Boolean,
+      default: false
+    }
+  },
   computed:{
+    sideNavBar: {
+      get() {
+        return this.$store.getters['sideNavBar/getSideNavBar']
+      },
+      set(value) {
+        this.$store.commit('sideNavBar/storeSideNavBar', value)
+      }
+    },
+    width(){
+      return this.$vssWidth
+    },
     actualPath(){
       return this.$route.path
     },
@@ -24,6 +49,14 @@ export default {
     })
   },
   methods: {
+    checkIcon(option){
+      let icon = ''
+      if (option === 'Tickets') {icon = 'fa-solid fa-clipboard-list' }
+      else if (option === 'Usuarios') {icon = 'fa-solid fa-user'}
+      else if (option === 'Configuración') {icon = 'fas fa-cog'}
+      else if (option === 'Contacto') {icon = 'fa-solid fa-address-book'}
+      return icon
+    },
     checkSelected(option){
       let selected = false
       let splitted = this.actualPath.split('/')
@@ -51,10 +84,15 @@ export default {
       else if (option === 'Configuración') {route = `${routes.users}/${this.loggedUser.id_usuario}?profile=true`}
       else if (option === 'Contacto') {route = routes.contact}
 
+      this.sideNavBar = true
+
       if (this.actualPath !== route){
         this.$router.push({ path: route })
       }
-    }
+    },
+    ...mapMutations({
+      storeSideNavBar: 'sideNavBar/storeSideNavBar'
+    })
   },
   mounted(){
     this.checkUserType()

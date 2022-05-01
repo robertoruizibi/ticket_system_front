@@ -4,8 +4,8 @@
 import routes from '~/config/routes'
 import config from '~/config'
 import get from 'lodash/get'
-import { checkRol } from '~/utils/common'
-import { mapGetters } from 'vuex'
+import { checkRol, loadChartData } from '~/utils/common'
+import { mapGetters, mapMutations } from 'vuex'
 import { deleteUser } from '~/lib/api'
 import { isArrayEmpty } from '~/utils/common'
 import { getUserTickets, getTicketDates, deleteTicket } from '~/lib/api'
@@ -20,7 +20,9 @@ export default {
       desde: 0,
       maxTickets: 0,
       actualPage: 1,
-      search: ''
+      search: '',
+
+      ticketToDelete: ''
     }
   },
   watch: {
@@ -32,8 +34,12 @@ export default {
     numPages(){
       return Math.ceil(this.maxTickets / 10) 
     },
+    userIsAdmin(){
+      return this.loggedUser.rol === 'empresa'
+    },
     ...mapGetters({
-      loggedUser: 'user/getUser'
+      loggedUser: 'user/getUser',
+      getPreviousRoute: 'sideNavBar/getPreviousRoute'
     })
   },
   methods: {
@@ -49,6 +55,7 @@ export default {
     async changePage(pageIndex){
       this.desde = (pageIndex - 1) * 10
       this.checkFilter()
+      this.storePreviousRoute(this.$route.path)
       this.$router.push({ path: `${routes.tickets}?desde=${this.desde}` })
       await this.checkDesdeSurpassedMaxTickets()
     },
@@ -56,17 +63,20 @@ export default {
     async checkDesdeSurpassedMaxTickets(){
       if (this.desde > this.maxTickets) {
         await this.getUserTickets('date', 'asc', 0)
+        this.storePreviousRoute(this.$route.path)
         this.$router.push({ path: routes.tickets })
       }
     },
 
     createNewTicket(){
+      this.storePreviousRoute(this.$route.path)
       this.$router.push({ path: routes.newTicket })
     },
 
-    async deleteTicket(id){
-      await deleteTicket(this, id)
-      await this.getUserTickets(this.loggedUser.id_usuario)
+    async deleteTicket(){
+      await deleteTicket(this, this.ticketToDelete)
+      let filtered = this.tickets.filter(ticket => ticket.id_ticket === this.ticketToDelete)
+      this.tickets = this.tickets.filter(ticket => ticket.id_ticket !== filtered[0].id_ticket)
     },
 
     estado(enabled){
@@ -80,34 +90,38 @@ export default {
         this.tickets = tickets
         this.maxTickets = get(response, 'data.page.total', 0)
         this.allTickets = get(response, 'data.allTickets', [])
-        this.tickets = await Promise.all(
-          this.tickets.map(async ticket => {
-            let dates = await this.getDates(ticket.id_ticket)
-            return {
-              cliente: ticket.cliente,
-              enabled: ticket.enabled,
-              id_ticket: ticket.id_ticket,
-              prioridad: ticket.prioridad,
-              responsable: ticket.responsable,
-              titulo: ticket.titulo,
-              dates: dates
-            }
-          })
-        )
-        this.allTickets = await Promise.all(
-          this.allTickets.map(async ticket => {
-            let dates = await this.getDates(ticket.id_ticket)
-            return {
-              cliente: ticket.cliente,
-              enabled: ticket.enabled,
-              id_ticket: ticket.id_ticket,
-              prioridad: ticket.prioridad,
-              responsable: ticket.responsable,
-              titulo: ticket.titulo,
-              dates: dates
-            }
-          })
-        )
+        if (this.tickets) {
+          this.tickets = await Promise.all(
+            this.tickets.map(async ticket => {
+              let dates = await this.getDates(ticket.id_ticket)
+              return {
+                cliente: ticket.cliente,
+                enabled: ticket.enabled,
+                id_ticket: ticket.id_ticket,
+                prioridad: ticket.prioridad,
+                responsable: ticket.responsable,
+                titulo: ticket.titulo,
+                dates: dates
+              }
+            })
+          )
+        }
+        if (this.allTickets) {
+          this.allTickets = await Promise.all(
+            this.allTickets.map(async ticket => {
+              let dates = await this.getDates(ticket.id_ticket)
+              return {
+                cliente: ticket.cliente,
+                enabled: ticket.enabled,
+                id_ticket: ticket.id_ticket,
+                prioridad: ticket.prioridad,
+                responsable: ticket.responsable,
+                titulo: ticket.titulo,
+                dates: dates
+              }
+            })
+          )
+        }
         this.copyTickets = this.tickets
       }
     },
@@ -138,14 +152,29 @@ export default {
     },
 
     ticketsPath(id){
-      return `${routes.tickets}/${id}`
+      this.storePreviousRoute(`${routes.tickets}/${id}`)
+      this.$router.push({ path: `${routes.tickets}/${id}` })
     },
+
+    ticketsEditPath(id){
+      this.storePreviousRoute(`${routes.tickets}`)
+      this.$router.push({ path: `${routes.tickets}/${id}?edit=true` })
+    },
+    
+    setTicketToDelete(id){
+      this.ticketToDelete = id
+    },
+
+    ...mapMutations({
+      storePreviousRoute: 'sideNavBar/storePreviousRoute'
+    })
   },
   async mounted(){
     checkRol(this)
     this.desde = !isNaN(this.$route.query.desde) ? this.$route.query.desde : 0 
     await this.getUserTickets()
     this.checkDesdeSurpassedMaxTickets()
+    loadChartData()
   }
 }
 </script>

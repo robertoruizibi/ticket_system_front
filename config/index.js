@@ -1,8 +1,12 @@
 const apiURL = 'http://localhost:3000/api'
+const webUrl = 'http://localhost:8000/'
 
 export default {
-  //API Url
+  // API Url
   apiURL,
+
+  // WEB Url
+  webUrl,
 
   // API endpoints
   api: {

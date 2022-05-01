@@ -1,43 +1,79 @@
 <div class="container">
-  <div>
-    <Logo />
-    <h1 class="title">
-      Users
-    </h1>
-
-    <input type="text" v-model="search">
-    <button @click="searchUser">Buscar</button>
-    <button @click="resetUser" v-if="search.length > 0">Restablecer</button>
-
-    <select name="filter" id="filter" v-model="filter">
-      <option value="name&asc">Nombre A-Z</option>
-      <option value="name&desc">Nombre Z-A</option>
-      <option value="email&asc">Email A-Z</option>
-      <option value="email&desc">Email Z-A</option>
-      <option value="enabled&asc">Habilitados ↑</option>
-      <option value="enabled&desc">Habilitados ↓</option>
-      <option value="date&asc">Fecha ↑</option>
-      <option value="date&desc">Fecha ↓</option>
-    </select>
-
-    <button @click="createNewUser">Añadir usuario</button>
-
-    <section>
-      <ul>
-        <li v-for="(user, index) in users">
-          <img :src="getImage(user.image)" />
-          <span>{{ user.nombre_organizacion }}</span>
-          <span>{{ user.email }}</span>
-          <NuxtLink :to="usersPath(user.id_usuario)">Edit</NuxtLink>
-          <button @click="deleteUser(user.id_usuario)">Delete</button>
-        </li>
-      </ul>
-    </section>
-
-    <section>
-			<ul>
-        <li v-for="index in numPages" :key="index" @click="changePage(index)">{{ index }}</li>
-			</ul>
-		</section>
+  <div class="card shadow mb-4">
+    <div class="card-header py-3" style="    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;">
+      <h4 class="m-0 font-weight-bold text-primary">Usuarios registrados</h4>
+      <button @click="createNewUser" class="btn btn-primary">Añadir usuario</button>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Imagen</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Editar</th>
+              <th>Borrar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(user, index) in users">
+              <td>
+                <div style="width: 3em;
+                    height: 3em;
+                    overflow: hidden;
+                    margin: auto;
+                    position: relative;
+                    text-align: center;">
+                  <img :src="getImage(user.image)" class="img-profile rounded-circle" style="position:absolute;
+                  left: -100%;
+                  right: -100%;
+                  top: -100%;
+                  bottom: -100%;
+                  margin: auto;
+                  min-height: 100%;
+                  min-width: 100%;
+                  width: 3em;
+                  height: 3em;" />
+                </div>
+              </td>
+              <td>{{ user.nombre_organizacion }}</td>
+              <td>{{ user.email }}</td>
+              <td class="text-center pointer">
+                <button class="btn btn-primary" @click="usersEditPath(user.id_usuario)">
+                <font-awesome-icon icon="fa-solid fa-pen-to-square" />
+              </button>
+              </td>
+              <td class="text-center pointer">
+                <button class="btn btn-primary" @click="deleteModal(user.id_usuario)" data-toggle="modal" data-target="#deleteModal">
+                  <font-awesome-icon icon="fa-solid fa-trash-can" />
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">¿Deseas eliminar este usuario?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Selecciona "Eliminar" si realmente deseas eliminar este usuario</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+          <a class="btn btn-primary" @click="deleteUser"  data-dismiss="modal">Eliminar</a>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

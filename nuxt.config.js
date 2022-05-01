@@ -10,19 +10,58 @@ export default {
     htmlAttrs: {
       lang: 'en'
     },
+    bodyAttrs: {
+      class: 'bg-gradient-background',
+      // style: 'overflow: hidden'
+    },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {
+        rel: "stylesheet",
+        href:
+          "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      },
+      {
+        rel: "stylesheet",
+        href:
+          "https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"
+      }
+    ],
+    script: [
+      {
+        src: "https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js",
+        type: "text/javascript"
+      },
+      {
+        src:
+          "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js",
+        type: "text/javascript"
+      },
+      {
+        src:
+          "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js",
+        type: "text/javascript"
+      },
+      {
+        src:
+          "https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js",
+        type: "text/javascript"
+      }
     ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    '@/assets/styles/default.scss'
+    '@/assets/styles/default.scss',
+    '@/assets/styles/sb-admin-2.css',
+    '@fortawesome/fontawesome-svg-core/styles.css'
+    // '@/assets/styles/fontawesome-free/css/all.css'
+    // '@/assets/styles/sb-admin-2.min.css'
   ],
 
   server: {
@@ -32,6 +71,13 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: '~/plugins/axios' },
+    { src: '~/plugins/fontawesome.js' },
+    { src: '~/js/sb-admin-2.min.js' },
+    { src: '~/plugins/mixins.js'},
+    // { src: '~/plugins/jquery.min.js' },
+    // { src: '~/plugins/jquery.easing.min.js' },
+    // { src: '~/plugins/bootstrap.bundle.min.js' },
+    
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -44,7 +90,7 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
+    '@nuxtjs/axios'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

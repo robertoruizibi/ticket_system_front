@@ -4,13 +4,17 @@
 import get from 'lodash/get'
 import routes from '~/config/routes'
 import { checkRol } from '~/utils/common'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import { isObjEmpty } from '~/utils/common'
 import { getUsers, updateTicket, getTicket, createTicket, createTicketDate } from '~/lib/api'
 
 export default {
   data() {
     return {
+      // result variables
+      createdSuccessfully: false,
+      updatedSuccessfully: false,
+
       // users
       usuariosResponsable: [],
       usuariosCliente: [],
@@ -21,6 +25,7 @@ export default {
       prioridad: '',
       enabled: true,
       responsable: '',
+      nombre_responsable: '',
       cliente: '',
 
       tiposPrioridad: ['Alta', 'Media', 'Baja'],
@@ -32,13 +37,23 @@ export default {
       responsableError: false,
       clienteError: false,
       tituloErrorMsg: 'El titulo de organización es obligatorio',
-      tituloMaxCarMsg: 'El título debe tener como máximo 30 caracteres',
+      tituloMaxCarMsg: 'El título debe tener como máximo 100 caracteres',
       prioridadErrorMsg: 'La prioridad es obligatoria',
       responsableErrorMsg: 'El responsable es obligatorio',
       clienteErrorMsg: 'El cliente es obligatorio',
     }
   },
   computed: {
+    // modal computed
+    modalTitle(){
+      return this.isNewTicketMode ? `¿Crear nuevo ticket?` : '¿Actualizar ticket?'
+    },
+
+    modalMessage(){
+      return this.isNewTicketMode ? 'Selecciona "Aceptar" si realmente deseas crear este ticket' : `Selecciona "Aceptar" si realmente deseas actualizar este ticket`
+    },
+
+    // others
     ticketState(){
       return this.enabled ? 'Abierto' : 'Cerrado'
     },
@@ -48,10 +63,13 @@ export default {
     isNewTicketMode(){
       return this.$route.path === routes.newTicket
     },
+    ...mapGetters({
+      getPreviousRoute: 'sideNavBar/getPreviousRoute'
+    })
   },
   methods: {
     checkTituloMaxCar(){
-       if (this.titulo.length > 30){
+       if (this.titulo.length > 100){
         this.tituloMaxCar = true
       } else {
         this.tituloMaxCar = false
@@ -106,15 +124,18 @@ export default {
       this.prioridad = ticket.prioridad
       this.enabled = ticket.enabled
       this.responsable = ticket.responsable
+      this.nombre_responsable = ticket.nombre_responsable
       this.cliente = ticket.cliente
       this.titulo = ticket.titulo
     },
     async submitForm() {
       this.checkValues()
       if(this.tituloError || this.prioridadError || this.responsableError || this.clienteError) return false
+      let responsable = this.usuariosResponsable.filter(user => user.id_usuario === this.responsable)
       this.ticket = {
         prioridad: this.prioridad,
         responsable: this.responsable,
+        nombre_responsable: responsable[0].nombre_organizacion,
         cliente: this.cliente,
         titulo: this.titulo,
         enabled: this.enabled
@@ -128,13 +149,28 @@ export default {
             ultima_fecha_consulta_cliente: null,
             id_ticket: ticketData.data.ticket.id_ticket
           }
-          await createTicketDate(this, date)
+          let data = await createTicketDate(this, date)
+          if (data.status && data.status === 200) this.createdSuccessfully = true
         }
       } else {
         let id = get(this.$route.params, 'ticket', null)
-        await updateTicket(this, id, this.ticket)
+        let data = await updateTicket(this, id, this.ticket)
+        if (data.status && data.status === 200) this.updatedSuccessfully = true
       }
-    }
+    },
+    returnRoute(){
+      let route = '/tickets'
+      if (this.getPreviousRoute !== ''){
+        route = this.getPreviousRoute
+      }
+      this.$router.push({ path: route })
+    },
+    returnToTicket(){
+      this.$emit('returnDetails')
+    },
+    ...mapMutations({
+      storePreviousRoute: 'sideNavBar/storePreviousRoute'
+    })
   },
   async mounted(){
     checkRol(this)

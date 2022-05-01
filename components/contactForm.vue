@@ -8,10 +8,12 @@ import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
+      title: 'Formulario de contacto',
       name: '',
       email: '',
       message: '',
-      to_name: 'empresa@gmail.com'
+      to_name: 'empresa@gmail.com',
+      reportSended: false
     }
   },
   computed: {
@@ -30,6 +32,7 @@ export default {
           from_email: this.email,
           message: this.message,
         }, config.account_id);
+        this.reportSended = true
       } catch (error) {
         // console.log({error})
       }

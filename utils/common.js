@@ -30,3 +30,36 @@ export const isValidPassword = (password1, password2) => {
   if (password1 !== password2) return false
   return true
 }
+
+export const loadChartData = () => {
+  $(document).ready( function () {
+    $('#dataTable').DataTable(
+      {
+        "language": {
+          "decimal":        "",
+          "emptyTable":     "No data available in table",
+          "info":           "Mostrando _START_ de _END_ resultados (_TOTAL_ en total)",
+          "infoEmpty":      "Mostrando 0 to 0 of 0 resultados",
+          "infoFiltered":   "(filtered from _MAX_ total entries)",
+          "infoPostFix":    "",
+          "thousands":      ",",
+          "lengthMenu":     "Mostrar  _MENU_  resultados",
+          "loadingRecords": "Cargando...",
+          "processing":     "Procesando...",
+          "search":         "Buscar: ",
+          "zeroRecords":    "No hay resultados coincidentes",
+          "paginate": {
+              "first":      "Primero",
+              "last":       "Último",
+              "next":       "Siguiente",
+              "previous":   "Anterior"
+          },
+          "aria": {
+              "sortAscending":  ": activar para ordenar la columna ascentendemente",
+              "sortDescending": ": activar para ordenar la columna descendentemente"
+          }
+        }
+      }
+    );
+  });
+}

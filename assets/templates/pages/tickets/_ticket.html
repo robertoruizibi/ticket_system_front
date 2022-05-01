@@ -1,18 +1,102 @@
-<div>
-  <template v-if="editMode">
-    <button @click="detailsTicket">Volver a detalles ticket</button>
+<div class="container">
+  <div v-if="editMode">
     <ticket-form />
-  </template>
-  <template v-else>
-    <button @click="editTicket">Editar ticket</button>
-    <ul>
-      <li v-for="(report, index) in reports">
-        <p><span>{{ report.contenido }}</span></p>
-        <a v-if="report.archivo_adjunto" :href="report.url" download>{{ report.archivo_adjunto }}</a>
-        <NuxtLink :to="reportsEditPath(report.id_reporte)">Edit</NuxtLink>
-        <button @click="deleteSingleReport(report.id_reporte)">Delete</button>
-      </li>
-    </ul>
-    <button @click="addReport">Añadir reporte</button>
-  </template>
+  </div>
+  <div v-else>
+    <div class="card shadow mb-4">
+      <div class="row align-items-baseline ml-1 mr-3 mt-4">
+        <div class="col-lg-4 col-sm-12">
+          <p>
+            <span class="btn-link pt-2 pl-0 pointer hoverNone w-50" @click="returnRoute"><font-awesome-icon icon="fa-solid fa-caret-left" />&nbsp;Volver atrás</span>
+          </p>
+        </div>
+        <div class="col-lg-3 col-sm-12" :class="{'text-center': width > 1000, 'text-left': width <= 1000}"><p>Responsable: {{responsableName}}</p></div>
+        <div class="col-lg-3 col-sm-12" :class="{'text-center': width > 1000, 'text-left': width <= 1000}"><p>Cliente: {{clienteName}}</p></div>
+        <div class="col-lg-2 col-sm-12 pointer" :class="{'text-center': width > 1000, 'text-left': width <= 1000}">
+          <p>
+            <button class="btn btn-primary" @click="shareTicket">
+              Compartir&nbsp;
+              <font-awesome-icon icon="fa-solid fa-share-nodes" />
+            </button>
+          </p>
+        </div>
+      </div>
+      <div class="row align-items-baseline ml-2 mr-3">
+        <div class="col-lg-6 col-sm-12" >
+          <p><h4 class="m-0 font-weight-bold text-primary " >{{ticket.titulo}}</h4></p>
+        </div>
+        <div class="col-lg-4 col-sm-12" :class="{'text-right': width > 1000, 'text-left': width <= 1000}">
+          <p><span>Creado el: {{getParsedDate(ticket.dates)}}</span></p>
+        </div>
+        <div class="col-lg-2 col-sm-12" :class="{'text-right': width > 1000, 'text-left': width <= 1000}">
+          <p><span>Prioridad: {{ticket.prioridad}}</span></p>
+        </div>
+      </div>
+      <hr>
+      
+      <template v-if="reports.length > 0">
+        <div v-for="(report, index) in reports" class="card shadow mt-4 ml-4 mr-4 p-3" :class="{'mb-4': index === reports.length-1}">
+          <div class="p-2 border">
+            <p class="mt-1 ml-1" v-for="contenido, index in parseContenidoEndline(report.contenido)">{{ contenido }}</p>
+          </div>
+          <br v-if="report.archivo_adjunto">
+          <p v-if="report.archivo_adjunto">Fichero adjunto: <a :href="report.url" download>{{ report.archivo_adjunto }}</a></p>
+          <hr>
+          <div class="row align-items-baseline">
+            <div class="col-lg-4 col-sm-12" :class="{'text-center': width > 1000, 'text-left': width <= 1000}">
+              <template v-if="userIsAdmin">{{reportViewed(report.visto)}}</template>
+            </div>
+            <div class="col-lg-4 col-sm-12 text-left">
+              <p>Reporte creado por: <span class="text-capitalize">{{ report.nombre_creador }}</span></p>
+            </div>
+            <div class="col-lg-2 col-sm-12 text-left" >
+              <p>{{ getParsedDate(report.fecha_creacion) }}</p>
+            </div>
+            <div class="col-lg-2 col-sm-12 pointer text-left">
+              <template v-if="checkSameIdReport(report.creador)">
+                <button class="btn btn-primary" @click="reportsEditPath(report.id_reporte)">
+                  <font-awesome-icon icon="fa-solid fa-pen-to-square" />
+                </button>&nbsp;
+                <button class="btn btn-primary" @click="deleteSingleReport(report.id_reporte)" data-toggle="modal" data-target="#deleteReport">
+                  <font-awesome-icon icon="fa-solid fa-trash-can" />
+                </button>
+              </template>
+            </div>
+          </div>      
+        </div>
+      </template>
+      <template v-else>
+        <p class="mt-3 ml-1 text-center"><span>No hay reportes creados</span></p>
+      </template>
+  
+      <hr>
+      
+      <div class="flex" style="display: flex; justify-content: flex-end;">
+        <button @click="addReport" class="btn btn-primary mb-4 mr-4">
+          <font-awesome-icon icon="fa-solid fa-plus" />
+          Añadir reporte
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="deleteReport" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">¿Deseas eliminar este reporte?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Selecciona "Eliminar" si realmente deseas eliminar este reporte</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+          <a class="btn btn-primary" @click="deleteReport()"  data-dismiss="modal">Eliminar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 </div>

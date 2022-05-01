@@ -4,8 +4,8 @@
 import routes from '~/config/routes'
 import config from '~/config'
 import get from 'lodash/get'
-import { checkRol } from '~/utils/common'
-import { mapGetters } from 'vuex'
+import { checkRol, loadChartData } from '~/utils/common'
+import { mapGetters, mapMutations } from 'vuex'
 import { deleteUser } from '~/lib/api'
 import { isArrayEmpty } from '~/utils/common'
 import { getUsers, getFileData } from '~/lib/api'
@@ -21,7 +21,9 @@ export default {
       desde: 0,
       maxUsers: 0,
       actualPage: 1,
-      search: ''
+      search: '',
+
+      userToDelete: ''
     }
   },
 
@@ -36,7 +38,8 @@ export default {
       return Math.ceil(this.maxUsers / 10) 
     },
     ...mapGetters({
-      user: 'user/getUser'
+      user: 'user/getUser',
+      getPreviousRoute: 'sideNavBar/getPreviousRoute'
     })
   },
   methods: {
@@ -44,6 +47,7 @@ export default {
     async changePage(pageIndex){
       this.desde = (pageIndex - 1) * 10
       this.checkFilter()
+      this.storePreviousRoute(this.$route.path)
       this.$router.push({ path: `${routes.users}?desde=${this.desde}` })
       await this.checkDesdeSurpassedMaxUsers()
     },
@@ -51,6 +55,7 @@ export default {
     async checkDesdeSurpassedMaxUsers(){
       if (this.desde > this.maxUsers) {
         await this.getUsers('date', 'asc', 0)
+        this.storePreviousRoute(this.$route.path)
         this.$router.push({ path: routes.users })
       }
     },
@@ -65,12 +70,18 @@ export default {
     },
 
     createNewUser(){
+      this.storePreviousRoute(this.$route.path)
       this.$router.push({ path: routes.newUser })
     },
 
-    async deleteUser(id){
-      await deleteUser(this, id)
+    deleteModal(id){
+      this.userToDelete = id
+    },
+
+    async deleteUser(){
+      await deleteUser(this, this.userToDelete)
       await this.getUsers()
+      this.deleteUser = ''
     },
 
     async getUsers(typeOrder, asc, desde){
@@ -105,56 +116,25 @@ export default {
       this.search = ''
     },
 
+    usersEditPath(id){
+      this.storePreviousRoute(`${routes.users}`)
+      this.$router.push({ path: `${routes.users}/${id}?edit=true` })
+    },
+
     usersPath(id){
       return `${routes.users}/${id}`
     },
+
+    ...mapMutations({
+      storePreviousRoute: 'sideNavBar/storePreviousRoute'
+    })
   },
   async mounted(){
     checkRol(this)
     this.desde = !isNaN(this.$route.query.desde) ? this.$route.query.desde : 0 
     await this.getUsers('date', 'asc', this.desde)
     this.checkDesdeSurpassedMaxUsers()
+    loadChartData()
   }
 }
 </script>
-
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
-</style>

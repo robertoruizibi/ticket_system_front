@@ -1,42 +1,71 @@
 <div class="container">
-  <div>
-    <Logo />
-    <h1 class="title">
-      Tickets
-    </h1>
+  <div class="card shadow mb-4">
+    <div class="card-header py-3" style="    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;">
+      <h4 v-if="userIsAdmin" class="m-0 font-weight-bold text-primary">Tickets existentes</h4>
+      <h4 v-if="!userIsAdmin" class="m-0 font-weight-bold text-primary">Tickets asignados</h4>
+      <button v-if="userIsAdmin" @click="createNewTicket" class="btn btn-primary">Añadir ticket</button>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Título</th>
+              <th>Fecha</th>
+              <th>Estado</th>
+              <th>Prioridad</th>
+              <th>Ver reportes</th>
+              <th v-if="userIsAdmin">Editar</th>
+              <th v-if="userIsAdmin">Borrar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(ticket, index) in tickets">
+              <td><span @click="ticketsPath(ticket.id_ticket)" class="pointer link-color">{{ ticket.titulo }}</span></td>
+              <td>{{ getParsedDate(ticket.dates) }}</td>
+              <td>{{ estado(ticket.enabled) }}</td>
+              <td>{{ ticket.prioridad }}</td>
+              <td class="text-center pointer">
+                <button class="btn btn-primary"  @click="ticketsPath(ticket.id_ticket)">
+                  <font-awesome-icon icon="fa-solid fa-eye" />
+                </button>
+              </td>
+              <td v-if="userIsAdmin" class="text-center pointer">
+                <button class="btn btn-primary" @click="ticketsEditPath(ticket.id_ticket)">
+                  <font-awesome-icon icon="fa-solid fa-pen-to-square" />
+                </button>
+              </td>
+              <td v-if="userIsAdmin" class="text-center pointer">
+                <button class="btn btn-primary" @click="setTicketToDelete(ticket.id_ticket)" data-toggle="modal" data-target="#deleteModal">
+                  <font-awesome-icon icon="fa-solid fa-trash-can" />
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
-    <input type="text" v-model="search">
-    <button @click="searchTicket">Buscar</button>
-    <button @click="resetTicket" v-if="search.length > 0">Restablecer</button>
-
-    <select name="filter" id="filter" v-model="filter">
-      <option value="title&asc">Nombre A-Z</option>
-      <option value="title&desc">Nombre Z-A</option>
-      <option value="enabled&asc">Abiertos ↑</option>
-      <option value="enabled&desc">Abiertos ↓</option>
-      <option value="date&asc">Fecha ↑</option>
-      <option value="date&desc">Fecha ↓</option>
-      <option value="priority&asc">Prioridad ↑</option>
-      <option value="priority&desc">Prioridad ↓</option>
-    </select>
-
-    <button @click="createNewTicket">Añadir ticket</button>
-
-    <ul>
-      <li v-for="(ticket, index) in tickets">
-        <span>{{ ticket.titulo }}</span>
-        <span>{{ getParsedDate(ticket.dates) }}</span>
-        <span>Estado: {{ estado(ticket.enabled) }}</span>
-        <span>Prioridad: {{ ticket.prioridad }}</span>
-        <NuxtLink :to="ticketsPath(ticket.id_ticket)">Edit</NuxtLink>
-        <button @click="deleteTicket(ticket.id_ticket)">Delete</button>
-      </li>
-    </ul>
-
-    <section>
-			<ul>
-        <li v-for="index in numPages" :key="index" @click="changePage(index)">{{ index }}</li>
-			</ul>
-		</section>
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">¿Deseas eliminar este ticket?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Selecciona "Eliminar" si realmente deseas eliminar este ticket</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+          <a class="btn btn-primary" @click="deleteTicket()"  data-dismiss="modal">Eliminar</a>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
