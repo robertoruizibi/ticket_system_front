@@ -13,8 +13,9 @@
                 <div class="text-center">
                   <h1 class="h4 text-gray-900 mb-4">{{title}}</h1>
                 </div>
-                <p v-if="updatedSuccessfully" class="alert alert-success">Se ha actualizado el usuario</p>
-                <p v-if="createdSuccessfully" class="alert alert-success">Se ha creado el usuario</p>
+                <p v-if="updatedSuccessfully" class="alert alert-success">Se ha actualizado el usuario.</p>
+                <p v-if="createdSuccessfully" class="alert alert-success">Se ha creado el usuario.</p>
+                <p v-if="userExistsError" class="alert alert-danger">Ha habido un error, el usuario ya existe.</p>
                 <form class="user" enctype='multipart/form-data'>
                   <div class="form-group">
                     <!-- Imagen -->
@@ -28,7 +29,7 @@
                     </div>
                     <br>
                     <div class="w-100 position-relative">
-                      <input class="custom-file-input pointer" type="file" name="file" id="customFile" ref="myFile" accept=".jpeg,.jpg,.png,image/jpeg,image/png" @change="loadImage" data-preview-file-type="text">
+                      <input class="custom-file-input pointer" :disabled="!isAdminUser" type="file" name="file" id="customFile" ref="myFile" accept=".jpeg,.jpg,.png,image/jpeg,image/png" @change="loadImage" data-preview-file-type="text">
                       <label class="custom-file-label pointer" for="customFile">{{imageName}}</label>
                     </div>
                     <br>
@@ -58,7 +59,7 @@
                   <div>
                     <!-- Estado -->
                     <label class="pointer" for="enabled">Estado:&nbsp;</label>
-                    <input class="pointer" type="checkbox" name="enabled" id="enabled" v-model="enabled">
+                    <input class="pointer" :disabled="!isAdminUser" type="checkbox" name="enabled" id="enabled" v-model="enabled">
                     <span>&nbsp;{{userState}}</span>
                   </div>
                   <hr>
