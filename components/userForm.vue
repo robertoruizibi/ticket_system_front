@@ -54,7 +54,7 @@ export default {
 
     // new user computeds
     isAdminUser(){
-      return get(this.userLogged, 'rol', '') === 'empresa' || this.isNewUserMode || this.isProfile
+      return get(this.userLogged, 'rol', '') === 'empresa' || this.isNewUserMode 
     },
 
     isProfile(){
