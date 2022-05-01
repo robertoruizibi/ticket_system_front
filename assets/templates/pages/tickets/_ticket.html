@@ -25,30 +25,35 @@
         </div>
       </div>
       <hr>
-   
-      <div v-for="(report, index) in reports" class="card shadow mt-4 ml-4 mr-4 p-3" :class="{'mb-4': index === reports.length-1}">
-        <p class="mt-1 ml-1"><span>{{ report.contenido }}</span></p>
-        <hr>
-        <div class="row align-items-baseline">
-          <div class="col-lg-5 col-sm-12">
-            <p v-if="report.archivo_adjunto">Fichero: <a :href="report.url" download>{{ report.archivo_adjunto }}</a></p>
-          </div>
-          <div class="col-lg-3 col-sm-12 text-right">
-            <p>Reporte creado por: <span class="text-capitalize">{{ responsable.nombre_organizacion }}</span></p>
-          </div>
-          <div class="col-lg-2 col-sm-12 text-right" >
-            <p>{{ getParsedDate(report.fecha_creacion) }}</p>
-          </div>
-          <div class="col-lg-2 col-sm-12 pointer text-right">
-            <button class="btn btn-primary" @click="reportsEditPath(report.id_reporte)">
-              <font-awesome-icon icon="fa-solid fa-pen-to-square" />
-            </button>&nbsp;
-            <button class="btn btn-primary" @click="deleteSingleReport(report.id_reporte)" data-toggle="modal" data-target="#deleteReport">
-              <font-awesome-icon icon="fa-solid fa-trash-can" />
-             </button>
-          </div>
-        </div>      
-      </div>
+      
+      <template v-if="reports.length > 0">
+        <div v-for="(report, index) in reports" class="card shadow mt-4 ml-4 mr-4 p-3" :class="{'mb-4': index === reports.length-1}">
+          <p class="mt-1 ml-1"><span>{{ report.contenido }}</span></p>
+          <hr>
+          <div class="row align-items-baseline">
+            <div class="col-lg-5 col-sm-12">
+              <p v-if="report.archivo_adjunto">Fichero: <a :href="report.url" download>{{ report.archivo_adjunto }}</a></p>
+            </div>
+            <div class="col-lg-3 col-sm-12 text-right">
+              <p>Reporte creado por: <span class="text-capitalize">{{ responsable.nombre_organizacion }}</span></p>
+            </div>
+            <div class="col-lg-2 col-sm-12 text-right" >
+              <p>{{ getParsedDate(report.fecha_creacion) }}</p>
+            </div>
+            <div class="col-lg-2 col-sm-12 pointer text-right">
+              <button class="btn btn-primary" @click="reportsEditPath(report.id_reporte)">
+                <font-awesome-icon icon="fa-solid fa-pen-to-square" />
+              </button>&nbsp;
+              <button class="btn btn-primary" @click="deleteSingleReport(report.id_reporte)" data-toggle="modal" data-target="#deleteReport">
+                <font-awesome-icon icon="fa-solid fa-trash-can" />
+               </button>
+            </div>
+          </div>      
+        </div>
+      </template>
+      <template v-else>
+        <p class="mt-3 ml-1 text-center"><span>No hay reportes creados</span></p>
+      </template>
   
       <hr>
       

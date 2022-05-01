@@ -14,7 +14,7 @@
             <tr>
               <th>Título</th>
               <th>Fecha</th>
-              <th>Activo</th>
+              <th>Estado</th>
               <th>Prioridad</th>
               <th>Ver reportes</th>
               <th>Editar</th>
@@ -25,8 +25,8 @@
             <tr v-for="(ticket, index) in tickets">
               <td><span @click="ticketsPath(ticket.id_ticket)" class="pointer link-color">{{ ticket.titulo }}</span></td>
               <td>{{ getParsedDate(ticket.dates) }}</td>
-              <td>Estado: {{ estado(ticket.enabled) }}</td>
-              <td>Prioridad: {{ ticket.prioridad }}</td>
+              <td>{{ estado(ticket.enabled) }}</td>
+              <td>{{ ticket.prioridad }}</td>
               <td class="text-center pointer">
                 <button class="btn btn-primary"  @click="ticketsPath(ticket.id_ticket)">
                   <font-awesome-icon icon="fa-solid fa-eye" />

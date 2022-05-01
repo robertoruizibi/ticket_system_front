@@ -26,7 +26,6 @@ export default {
    ticketForm
   },
   computed: {
-    
     ...mapGetters({
       getPreviousRoute: 'sideNavBar/getPreviousRoute'
     })
