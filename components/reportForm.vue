@@ -32,11 +32,6 @@ export default {
       contenidoErrorMsg: 'Debes escribir un reporte'
     }
   },
-  watch: {
-    contenido(newVal, oldVal) {
-      console.log('numero saltos de linea',(newVal.match(/\n/g)||[]).length);
-    }
-  },
   computed:{
     // modal computed
     modalTitle(){
@@ -125,7 +120,6 @@ export default {
         }
         if (reportData.status && reportData.status === 200) this.updatedSuccessfully = true
       } else {
-        console.log('loggedUser', this.loggedUser);
         this.report = {
           contenido: this.contenido,
           fecha_creacion: this.fechaCreacion,
@@ -134,7 +128,6 @@ export default {
           creador: this.loggedUser.id_usuario,
           nombre_creador: this.loggedUser.nombre_organizacion
         }
-        console.log("🚀 ~ file: reportForm.vue ~ line 124 ~ submitForm ~ this.report", this.report)
         let reportData = await createReport(this, this.report)
         if (this.file !== '' && get(reportData, 'data.report.id_reporte', null)){
           this.uploadFile(reportData.data.report.id_reporte)

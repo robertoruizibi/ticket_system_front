@@ -132,7 +132,6 @@ export default {
       this.checkValues()
       if(this.tituloError || this.prioridadError || this.responsableError || this.clienteError) return false
       let responsable = this.usuariosResponsable.filter(user => user.id_usuario === this.responsable)
-      console.log("🚀 ~ file: ticketForm.vue ~ line 135 ~ submitForm ~ responsable", responsable)
       this.ticket = {
         prioridad: this.prioridad,
         responsable: this.responsable,

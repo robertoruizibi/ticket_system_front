@@ -43,10 +43,8 @@ export default {
       let splitted = contenido.split('/\n/g')
       let splitted2 = splitted[0].split('\n')
       if (splitted2.length > 1) {
-        console.log("🚀 ~ file: _ticket.vue ~ line 48 ~ parseContenidoEndline ~ splitted2", splitted2)
         return splitted2
       }
-      console.log("🚀 ~ file: _ticket.vue ~ line 51 ~ parseContenidoEndline ~ splitted", splitted)
       return splitted
     },
     setResponsableName(){
@@ -57,7 +55,6 @@ export default {
       }
     },
     async setClienteName(){
-      console.log('this.loggedUser.rol', this.loggedUser.rol);
       if (this.loggedUser.rol === 'cliente'){
         this.clienteName = this.loggedUser.nombre_organizacion
       } else {
@@ -74,7 +71,6 @@ export default {
         let reportsFiltered = this.reports.filter(report => report.visto === 0)
         reportsFiltered.forEach(async report => {
             let editReport = report
-            console.log("🚀 ~ file: _ticket.vue ~ line 67 ~ changeViewed ~ editReport", editReport)
             editReport.visto = 1
             await updateReport(this, editReport.id_reporte, editReport)
         });
