@@ -43,6 +43,16 @@ export default {
     }
   },
   computed: {
+    // modal computed
+    modalTitle(){
+      return this.isNewTicketMode ? `¿Crear nuevo ticket?` : '¿Actualizar ticket?'
+    },
+
+    modalMessage(){
+      return this.isNewTicketMode ? 'Selecciona "Aceptar" si realmente deseas crear este ticket' : `Selecciona "Aceptar" si realmente deseas actualizar este ticket`
+    },
+
+    // others
     ticketState(){
       return this.enabled ? 'Abierto' : 'Cerrado'
     },

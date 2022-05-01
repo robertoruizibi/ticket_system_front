@@ -49,7 +49,7 @@ export default {
 
     modalMessage(){
       if (this.isProfile) return 'Selecciona "Aceptar" si realmente deseas actualizar tu perfil'
-      return this.isNewUserMode ? 'Selecciona "Aceptar" si realmente deseas crear este usuario' : `Selecciona "Aceptar" si realmente deseas actualizar ${this.user.email}?`
+      return this.isNewUserMode ? 'Selecciona "Aceptar" si realmente deseas crear este usuario' : `Selecciona "Aceptar" si realmente deseas actualizar ${this.user.email}`
     },
 
     // new user computeds
@@ -266,11 +266,11 @@ export default {
       this.loadProfileImageUrl()
     } else { 
       checkRol(this) 
-       this.loadImageUrl()
     }
     if (!this.isNewUserMode){
       await this.getUser()
       this.loadInitialValues()
+      this.loadImageUrl()
     }else {
       this.enabled = true
     }

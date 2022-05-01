@@ -31,6 +31,16 @@ export default {
     }
   },
   computed:{
+    // modal computed
+    modalTitle(){
+      return !this.isEditMode ? `¿Crear nuevo reporte?` : '¿Actualizar reporte?'
+    },
+
+    modalMessage(){
+      return !this.isEditMode ? 'Selecciona "Aceptar" si realmente deseas crear este reporte' : `Selecciona "Aceptar" si realmente deseas actualizar este reporte`
+    },
+
+    // others
     title(){
       return this.isEditMode ? 'Editar reporte' : 'Crear reporte'
     },

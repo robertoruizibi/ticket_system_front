@@ -1,58 +1,83 @@
 <div class="container">
-  <div class="card shadow mb-4">
-    <div class="row align-items-baseline ml-2 mr-3">
-      <div class="col-lg-5 col-sm-12" style="display: flex; align-items: baseline;">
-        <span class="btn-link pt-5 pl-3 pointer hoverNone w-50" @click="returnRoute"><font-awesome-icon icon="fa-solid fa-caret-left" />&nbsp;Volver atrás</span>
-        <p><h4 class="m-0 font-weight-bold text-primary ">{{ticket.titulo}}</h4></p>
-      </div>
-      <div class="col-lg-3 col-sm-12 text-right">
-        <p><span>Creado el: {{getParsedDate(ticket.dates)}}</span></p>
-      </div>
-      <div class="col-lg-2 col-sm-12 text-right">
-        <p><span>Prioridad: {{ticket.prioridad}}</span></p>
-      </div>
-      <div class="col-lg-2 col-sm-12 pointer text-right">
-        <p>
-          <button class="btn btn-primary" @click="shareTicket">
-            Compartir&nbsp;
-            <font-awesome-icon icon="fa-solid fa-share-nodes" />
-          </button>
-        </p>
-      </div>
-    </div>
-    <hr>
- 
-    <div v-for="(report, index) in reports" class="card shadow mt-4 ml-4 mr-4 p-3" :class="{'mb-4': index === reports.length-1}">
-      <p class="mt-1 ml-1"><span>{{ report.contenido }}</span></p>
-      <hr>
-      <div class="row align-items-baseline">
-        <div class="col-lg-5 col-sm-12">
-          <p v-if="report.archivo_adjunto">Fichero: <a :href="report.url" download>{{ report.archivo_adjunto }}</a></p>
+  <div v-if="editMode">
+    <ticket-form />
+  </div>
+  <div v-else>
+    <div class="card shadow mb-4">
+      <div class="row align-items-baseline ml-2 mr-3">
+        <div class="col-lg-5 col-sm-12" style="display: flex; align-items: baseline;">
+          <span class="btn-link pt-5 pl-3 pointer hoverNone w-50" @click="returnRoute"><font-awesome-icon icon="fa-solid fa-caret-left" />&nbsp;Volver atrás</span>
+          <p><h4 class="m-0 font-weight-bold text-primary ">{{ticket.titulo}}</h4></p>
         </div>
         <div class="col-lg-3 col-sm-12 text-right">
-          <p>Reporte creado por: <span class="text-capitalize">{{ responsable.nombre_organizacion }}</span></p>
+          <p><span>Creado el: {{getParsedDate(ticket.dates)}}</span></p>
         </div>
-        <div class="col-lg-2 col-sm-12 text-right" >
-          <p>{{ getParsedDate(report.fecha_creacion) }}</p>
+        <div class="col-lg-2 col-sm-12 text-right">
+          <p><span>Prioridad: {{ticket.prioridad}}</span></p>
         </div>
         <div class="col-lg-2 col-sm-12 pointer text-right">
-          <button class="btn btn-primary" @click="reportsEditPath(report.id_reporte)">
-            <font-awesome-icon icon="fa-solid fa-pen-to-square" />
-          </button>&nbsp;
-          <button class="btn btn-primary" @click="deleteSingleReport(report.id_reporte)">
-            <font-awesome-icon icon="fa-solid fa-trash-can" />
-           </button>
+          <p>
+            <button class="btn btn-primary" @click="shareTicket">
+              Compartir&nbsp;
+              <font-awesome-icon icon="fa-solid fa-share-nodes" />
+            </button>
+          </p>
         </div>
-      </div>      
-    </div>
-
-    <hr>
-    
-    <div class="flex" style="display: flex; justify-content: flex-end;">
-      <button @click="addReport" class="btn btn-primary mb-4 mr-4">
-        <font-awesome-icon icon="fa-solid fa-plus" />
-        Añadir reporte
-      </button>
+      </div>
+      <hr>
+   
+      <div v-for="(report, index) in reports" class="card shadow mt-4 ml-4 mr-4 p-3" :class="{'mb-4': index === reports.length-1}">
+        <p class="mt-1 ml-1"><span>{{ report.contenido }}</span></p>
+        <hr>
+        <div class="row align-items-baseline">
+          <div class="col-lg-5 col-sm-12">
+            <p v-if="report.archivo_adjunto">Fichero: <a :href="report.url" download>{{ report.archivo_adjunto }}</a></p>
+          </div>
+          <div class="col-lg-3 col-sm-12 text-right">
+            <p>Reporte creado por: <span class="text-capitalize">{{ responsable.nombre_organizacion }}</span></p>
+          </div>
+          <div class="col-lg-2 col-sm-12 text-right" >
+            <p>{{ getParsedDate(report.fecha_creacion) }}</p>
+          </div>
+          <div class="col-lg-2 col-sm-12 pointer text-right">
+            <button class="btn btn-primary" @click="reportsEditPath(report.id_reporte)">
+              <font-awesome-icon icon="fa-solid fa-pen-to-square" />
+            </button>&nbsp;
+            <button class="btn btn-primary" @click="deleteSingleReport(report.id_reporte)" data-toggle="modal" data-target="#deleteReport">
+              <font-awesome-icon icon="fa-solid fa-trash-can" />
+             </button>
+          </div>
+        </div>      
+      </div>
+  
+      <hr>
+      
+      <div class="flex" style="display: flex; justify-content: flex-end;">
+        <button @click="addReport" class="btn btn-primary mb-4 mr-4">
+          <font-awesome-icon icon="fa-solid fa-plus" />
+          Añadir reporte
+        </button>
+      </div>
     </div>
   </div>
+
+  <div class="modal fade" id="deleteReport" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">¿Deseas eliminar este reporte?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Selecciona "Eliminar" si realmente deseas eliminar este reporte</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+          <a class="btn btn-primary" @click="deleteReport()"  data-dismiss="modal">Eliminar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 </div>

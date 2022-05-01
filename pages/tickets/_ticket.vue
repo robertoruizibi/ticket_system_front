@@ -17,7 +17,9 @@ export default {
       editMode: false,
       reports: [],
       ticket: {},
-      responsable: {}
+      responsable: {},
+
+      reportToDelete: ''
     }
   },
   components: {
@@ -90,7 +92,11 @@ export default {
       this.$router.push({ path: `${routes.reports}/?edit=${id}` })
     },
     async deleteSingleReport(id){
-      await deleteReport(this, id)
+      this.reportToDelete = id
+    },
+
+    async deleteReport(){
+      await deleteReport(this, this.reportToDelete)
       await this.getReports()
     },
 

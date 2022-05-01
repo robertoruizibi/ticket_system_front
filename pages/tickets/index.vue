@@ -20,7 +20,9 @@ export default {
       desde: 0,
       maxTickets: 0,
       actualPage: 1,
-      search: ''
+      search: '',
+
+      ticketToDelete: ''
     }
   },
   watch: {
@@ -68,9 +70,10 @@ export default {
       this.$router.push({ path: routes.newTicket })
     },
 
-    async deleteTicket(id){
-      await deleteTicket(this, id)
-      await this.getUserTickets(this.loggedUser.id_usuario)
+    async deleteTicket(){
+      await deleteTicket(this, this.ticketToDelete)
+      let filtered = this.tickets.filter(ticket => ticket.id_ticket === this.ticketToDelete)
+      this.tickets = this.tickets.filter(ticket => ticket.id_ticket !== filtered[0].id_ticket)
     },
 
     estado(enabled){
@@ -84,34 +87,38 @@ export default {
         this.tickets = tickets
         this.maxTickets = get(response, 'data.page.total', 0)
         this.allTickets = get(response, 'data.allTickets', [])
-        this.tickets = await Promise.all(
-          this.tickets.map(async ticket => {
-            let dates = await this.getDates(ticket.id_ticket)
-            return {
-              cliente: ticket.cliente,
-              enabled: ticket.enabled,
-              id_ticket: ticket.id_ticket,
-              prioridad: ticket.prioridad,
-              responsable: ticket.responsable,
-              titulo: ticket.titulo,
-              dates: dates
-            }
-          })
-        )
-        this.allTickets = await Promise.all(
-          this.allTickets.map(async ticket => {
-            let dates = await this.getDates(ticket.id_ticket)
-            return {
-              cliente: ticket.cliente,
-              enabled: ticket.enabled,
-              id_ticket: ticket.id_ticket,
-              prioridad: ticket.prioridad,
-              responsable: ticket.responsable,
-              titulo: ticket.titulo,
-              dates: dates
-            }
-          })
-        )
+        if (this.tickets) {
+          this.tickets = await Promise.all(
+            this.tickets.map(async ticket => {
+              let dates = await this.getDates(ticket.id_ticket)
+              return {
+                cliente: ticket.cliente,
+                enabled: ticket.enabled,
+                id_ticket: ticket.id_ticket,
+                prioridad: ticket.prioridad,
+                responsable: ticket.responsable,
+                titulo: ticket.titulo,
+                dates: dates
+              }
+            })
+          )
+        }
+        if (this.allTickets) {
+          this.allTickets = await Promise.all(
+            this.allTickets.map(async ticket => {
+              let dates = await this.getDates(ticket.id_ticket)
+              return {
+                cliente: ticket.cliente,
+                enabled: ticket.enabled,
+                id_ticket: ticket.id_ticket,
+                prioridad: ticket.prioridad,
+                responsable: ticket.responsable,
+                titulo: ticket.titulo,
+                dates: dates
+              }
+            })
+          )
+        }
         this.copyTickets = this.tickets
       }
     },
@@ -149,6 +156,10 @@ export default {
     ticketsEditPath(id){
       this.storePreviousRoute(`${routes.tickets}`)
       this.$router.push({ path: `${routes.tickets}/${id}?edit=true` })
+    },
+    
+    setTicketToDelete(id){
+      this.ticketToDelete = id
     },
 
     ...mapMutations({

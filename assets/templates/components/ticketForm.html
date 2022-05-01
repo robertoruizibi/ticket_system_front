@@ -16,7 +16,7 @@
             </div>
             <p v-if="updatedSuccessfully" class="alert alert-success">Se ha actualizado el ticket</p>
             <p v-if="createdSuccessfully" class="alert alert-success">Se ha creado el ticket</p>
-            <form class="user" @submit.prevent="submitForm">
+            <form class="user">
               <div class="form-group">
                 <!-- Titulo -->
                 <label for="titulo">Título del ticket:</label>
@@ -27,7 +27,7 @@
 
                 <!-- Responsable -->
                 <label for="responsable">Responsable:</label>
-                <select class="form-control" name="responsable" id="responsable" v-model="responsable" @blur="checkResponsable">
+                <select class="form-control pointer" name="responsable" id="responsable" v-model="responsable" @blur="checkResponsable">
                   <option v-for="(user, index) in usuariosResponsable" :value="user.id_usuario"> {{ user.email }} </option>
                 </select>
                 <br>
@@ -35,15 +35,15 @@
 
                 <!-- Cliente -->
                 <label for="cliente">Cliente:</label>
-                <select class="form-control" name="cliente" id="cliente" v-model="cliente"  @blur="checkCliente">
+                <select class="form-control pointer" name="cliente" id="cliente" v-model="cliente"  @blur="checkCliente">
                   <option v-for="(user, index) in usuariosCliente" :value="user.id_usuario"> {{ user.email }} </option>
                 </select>
                 <br>
                 <p  class="alert alert-danger" v-if="clienteError">{{clienteErrorMsg}}</p>
 
                 <!-- Prioridad -->
-                <label for="cliente">Prioridad:</label>
-                <select class="form-control" name="prioridad" id="prioridad" v-model="prioridad" @blur="checkPrioridad">
+                <label for="prioridad">Prioridad:</label>
+                <select class="form-control pointer" name="prioridad" id="prioridad" v-model="prioridad" @blur="checkPrioridad">
                   <option value="Alta">Alta</option>
                   <option value="Media">Media</option>
                   <option value="Baja">Baja</option>
@@ -58,10 +58,28 @@
                 <span>&nbsp;{{ ticketState }}</span>
               </div>
               <hr>
-              <button class="btn btn-primary btn-block" type="submit">Guardar cambios</button>
               <!-- <hr> -->
             </form>
+            <button class="btn btn-primary btn-block"  data-toggle="modal" data-target="#ticketModal">Guardar cambios</button>
             <br>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="ticketModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">{{ modalTitle }}</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">{{ modalMessage }}</div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+              <a class="btn btn-primary" @click="submitForm"  data-dismiss="modal">Aceptar</a>
+            </div>
           </div>
         </div>
       </div>
