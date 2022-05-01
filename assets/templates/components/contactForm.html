@@ -32,7 +32,7 @@
               <h1 class="h4 text-gray-900 mb-4">{{title}}</h1>
             </div>
             <p v-if="reportSended" class="alert alert-success">Se ha enviado el mensaje</p>
-            <form class="user" @submit.prevent="submitForm">
+            <form class="user" @submit.prevent="sendEmail">
               <div class="form-group">
                 <!-- Nombre -->
                 <label for="from_name">Nombre:</label>
