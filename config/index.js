@@ -1,4 +1,4 @@
-const apiURL = 'https://de3e-176-56-74-208.ngrok.io/api'
+const apiURL = ''
 const apiURLSRC = 'https://de3e-176-56-74-208.ngrok.io/api'
 
 export default {
