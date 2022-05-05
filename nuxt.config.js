@@ -90,7 +90,12 @@ export default {
   },
   
   proxy: {
-    '/api/': { target: 'https://de3e-176-56-74-208.ngrok.io', pathRewrite: {'^/api/': ''}}
+    '/api/': { 
+      target: 'https://de3e-176-56-74-208.ngrok.io', 
+      pathRewrite: {'^/api/': ''},
+      onProxyRes: (proxyRes, req, res) => {
+          proxyRes.headers['Access-Control-Allow-Origin'] = 'https://de3e-176-56-74-208.ngrok.io'
+      }}
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
