@@ -12,7 +12,6 @@ export default {
     },
     bodyAttrs: {
       class: 'bg-gradient-background',
-      // style: 'overflow: hidden'
     },
     meta: [
       { charset: 'utf-8' },
@@ -23,13 +22,11 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       {
         rel: "stylesheet",
-        href:
-          "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        href:"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
       },
       {
         rel: "stylesheet",
-        href:
-          "https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"
+        href:"https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"
       }
     ],
     script: [
@@ -67,11 +64,8 @@ export default {
   plugins: [
     { src: '~/plugins/axios' },
     { src: '~/plugins/fontawesome.js' },
-    { src: '~/js/sb-admin-2.min.js' },
+    { src: '~/plugins/sb-admin-2.min.js' },
     { src: '~/plugins/mixins.js'},
-    // { src: '~/plugins/jquery.min.js' },
-    // { src: '~/plugins/jquery.easing.min.js' },
-    // { src: '~/plugins/bootstrap.bundle.min.js' },
     
   ],
 
