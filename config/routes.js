@@ -6,5 +6,5 @@ export default {
   newTicket: '/tickets/newTicket',
   reports: '/reports',
   contact: '/contact',
-  legalTerms: '/legalTerms'
+  privacityPolicity: '/privacityPolicity'
 }

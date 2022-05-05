@@ -1,1 +1,0 @@
-<template src="assets/templates/pages/contact/legalTerms.html" />

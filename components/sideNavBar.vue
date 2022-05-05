@@ -10,8 +10,8 @@ import { isObjEmpty } from '~/utils/common'
 export default {
   data() {
     return {
-      adminOptions: ['Tickets', 'Usuarios', 'Configuración', 'Contacto', 'Términos legales'],
-      normalUserOptions: ['Tickets', 'Configuración', 'Contacto', 'Términos legales'],
+      adminOptions: ['Tickets', 'Usuarios', 'Configuración', 'Contacto', 'Política de privacidad'],
+      normalUserOptions: ['Tickets', 'Configuración', 'Contacto', 'Política de privacidad'],
       actualOptions: []
     }
   },
@@ -55,7 +55,7 @@ export default {
       else if (option === 'Usuarios') {icon = 'fa-solid fa-user'}
       else if (option === 'Configuración') {icon = 'fas fa-cog'}
       else if (option === 'Contacto') {icon = 'fa-solid fa-address-book'}
-      else if (option === 'Términos legales') {icon = 'fa-solid fa-file-contract'}
+      else if (option === 'Política de privacidad') {icon = 'fa-solid fa-file-contract'}
       return icon
     },
     checkSelected(option){
@@ -65,7 +65,7 @@ export default {
       else if (option === 'Usuarios') {selected = `/${splitted[1]}` === routes.users && !this.$route.query.profile}
       else if (option === 'Configuración') {selected = this.$route.query.profile}
       else if (option === 'Contacto') {selected = `/${splitted[1]}` === routes.contact}
-      else if (option === 'Términos legales') {selected = `/${splitted[1]}` === routes.legalTerms}
+      else if (option === 'Política de privacidad') {selected = `/${splitted[1]}` === routes.privacityPolicity}
       return selected
     },
     checkUserType() {
@@ -85,7 +85,7 @@ export default {
       else if (option === 'Usuarios') {this.checkUserType(); route = routes.users}
       else if (option === 'Configuración') {route = `${routes.users}/${this.loggedUser.id_usuario}?profile=true`}
       else if (option === 'Contacto') {route = routes.contact}
-      else if (option === 'Términos legales') {route = routes.legalTerms}
+      else if (option === 'Política de privacidad') {route = routes.privacityPolicity}
 
       this.sideNavBar = true
 

@@ -128,9 +128,9 @@ export default {
         component: 'pages/contact/index.vue'
       },
       {
-        name: 'legalTerms',
-        path: routes.legalTerms,
-        component: 'pages/legalTerms/index.vue'
+        name: 'privacityPolicity',
+        path: routes.privacityPolicity,
+        component: 'pages/privacityPolicity/index.vue'
       }
     ]
   }
