@@ -16,19 +16,32 @@
 
   <!-- Nav Item - Dashboard -->
   <li class="nav-item text-center mt-4 f-15" :class="{'ml-2': width > 767, 'mr-2': width <= 767}" v-for="(option, index) in actualOptions" @click="redirectToOption(option)">
-    <a class="nav-link pointer">
-      <template v-if="checkSelected(option)">
-        <font-awesome-icon :icon="checkIcon(option)" class="side-nav-bar-focus-color" />&nbsp;
-        <span class="text-uppercase">
-          <strong class="side-nav-bar-focus-color">{{ option }}&nbsp;
-            <font-awesome-icon icon="fa-solid fa-caret-left" />
-          </strong>
-        </span>
-      </template>
-      <template v-else>
-        <font-awesome-icon :icon="checkIcon(option)" />&nbsp;
-        <span class="text-uppercase text-white">{{ option }}</span>
-      </template>
+    <template v-if="index !== actualOptions.length - 1">
+      <a class="nav-link pointer">
+        <template v-if="checkSelected(option)">
+          <font-awesome-icon :icon="checkIcon(option)" class="side-nav-bar-focus-color" />&nbsp;
+          <span class="text-uppercase">
+            <strong class="side-nav-bar-focus-color">{{ option }}&nbsp;
+              <font-awesome-icon icon="fa-solid fa-caret-left" />
+            </strong>
+          </span>
+        </template>
+        <template v-else>
+          <font-awesome-icon :icon="checkIcon(option)" />&nbsp;
+          <span class="text-uppercase text-white">{{ option }}</span>
+        </template>
+      </a>
+    </template>
+  </li>
+
+  
+  <li class="text-center text-hover">
+    <hr class="sidebar-divider my-0">
+    <br>
+    <a class="nav-link pointer text-white" @click="redirectToOption('Política de privacidad')">
+      <span :class="{'side-nav-bar-focus-color': checkSelected('Política de privacidad')}">
+        {{actualOptions[actualOptions.length-1]}}
+      </span>
     </a>
   </li>
   

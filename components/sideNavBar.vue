@@ -55,7 +55,7 @@ export default {
       else if (option === 'Usuarios') {icon = 'fa-solid fa-user'}
       else if (option === 'Configuración') {icon = 'fas fa-cog'}
       else if (option === 'Contacto') {icon = 'fa-solid fa-address-book'}
-      else if (option === 'Política de privacidad') {icon = 'fa-solid fa-file-contract'}
+      // else if (option === 'Política de privacidad') {icon = 'fa-solid fa-file-contract'}
       return icon
     },
     checkSelected(option){
