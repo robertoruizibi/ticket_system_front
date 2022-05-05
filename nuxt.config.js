@@ -132,6 +132,11 @@ export default {
         name: 'contact',
         path: routes.contact,
         component: 'pages/contact/index.vue'
+      },
+      {
+        name: 'legalTerms',
+        path: routes.legalTerms,
+        component: 'pages/legalTerms/index.vue'
       }
     ]
   }
