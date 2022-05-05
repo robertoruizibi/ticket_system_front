@@ -80,22 +80,19 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    '@nuxtjs/proxy'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    proxy: true,
-    prefix: '/api',
   },
   
   proxy: {
-    '/api/': { 
+    '/api': { 
       target: 'https://de3e-176-56-74-208.ngrok.io', 
-      pathRewrite: {'^/api/': ''},
-      onProxyRes: (proxyRes, req, res) => {
-          proxyRes.headers['Access-Control-Allow-Origin'] = 'https://de3e-176-56-74-208.ngrok.io'
-      }}
+      pathRewrite: {'^/api': '/api'}
+    }
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
