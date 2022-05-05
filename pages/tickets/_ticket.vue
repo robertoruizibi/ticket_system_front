@@ -110,7 +110,7 @@ export default {
       this.reports = await Promise.all(
         this.reports.map(async report => {
             const url = config.api.upload
-            const api = config.apiURL
+            const api = config.apiURLSRC
             // let userData = await getUser(this, report.creador)
             // let creadorName = get(userData, 'data.usuario.nombre_organizacion', '')
             return {

@@ -245,13 +245,13 @@ export default {
 
     loadImageUrl() {
       const url = config.api.upload
-      const api = config.apiURL
+      const api = config.apiURLSRC
       this.imageUrl =  `${api}${url}/fotoPerfil/${this.user.image}?x-auth=${localStorage.getItem('token')}`
     },
 
     loadProfileImageUrl(){
       const url = config.api.upload
-      const api = config.apiURL
+      const api = config.apiURLSRC
       this.imageUrl =  `${api}${url}/fotoPerfil/${this.userLogged.image}?x-auth=${localStorage.getItem('token')}`
     },
 

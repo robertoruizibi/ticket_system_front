@@ -28,7 +28,7 @@ export default {
     },
     imageUrl() {
       const url = config.api.upload
-      const api = config.apiURL
+      const api = config.apiURLSRC
       return `${api}${url}/fotoPerfil/${this.loggedUser.image}?x-auth=${localStorage.getItem('token')}`
     },
     ...mapGetters({

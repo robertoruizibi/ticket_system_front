@@ -98,7 +98,7 @@ export default {
     getImage(image){
       // let imageData = await getFileData(this, 'fotoPerfil', image)
       const url = config.api.upload
-      const api = config.apiURL
+      const api = config.apiURLSRC
       const type = 'fotoPerfil'
       return `${api}${url}/${type}/${image}` + `?x-auth=${localStorage.getItem('token')}`
     },
