@@ -1,9 +1,6 @@
 <div class="container">
   <div class="card shadow mb-4">
-    <div class="card-header py-3" style="    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;">
+    <div class="card-header py-3 listing-display">
       <h4 class="m-0 font-weight-bold text-primary">Usuarios registrados</h4>
       <button @click="createNewUser" class="btn btn-primary">Añadir usuario</button>
     </div>
@@ -22,22 +19,8 @@
           <tbody>
             <tr v-for="(user, index) in users">
               <td>
-                <div style="width: 3em;
-                    height: 3em;
-                    overflow: hidden;
-                    margin: auto;
-                    position: relative;
-                    text-align: center;">
-                  <img :src="getImage(user.image)" class="img-profile rounded-circle" style="position:absolute;
-                  left: -100%;
-                  right: -100%;
-                  top: -100%;
-                  bottom: -100%;
-                  margin: auto;
-                  min-height: 100%;
-                  min-width: 100%;
-                  width: 3em;
-                  height: 3em;" />
+                <div class="users-listing-image-container">
+                  <img :src="getImage(user.image)" class="img-profile rounded-circle users-listing-image-content" />
                 </div>
               </td>
               <td>{{ user.nombre_organizacion }}</td>

@@ -41,6 +41,72 @@
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
+.login-margin-top {
+  margin-top: 10.6em;
+}
+
+.users-listing-image-container {
+  width: 3em;
+  height: 3em;
+  overflow: hidden;
+  margin: auto;
+  position: relative;
+  text-align: center;
+}
+
+.users-listing-image-content {
+  position:absolute;
+  left: -100%;
+  right: -100%;
+  top: -100%;
+  bottom: -100%;
+  margin: auto;
+  min-height: 100%;
+  min-width: 100%;
+  width: 3em;
+  height: 3em;
+}
+
+.user-form-image {
+  width: 25%;
+  height: 25%;
+  overflow: hidden;
+  margin: auto;
+  position: relative;
+  text-align: center;
+}
+
+.listing-display {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-end {
+  justify-content: flex-end;
+}
+
+.f-15{
+  font-size: 1.3em !important;
+}
+
+.side-nav-bar-focus-color {
+  color: #ffaa06;
+}
+
+.contact-height {
+  height: 88%;
+}
+
+.nav-background-color {
+  background-color: #50556c !important;
+}
+
 .moldes-logo {
   max-height: 4em;
   height: auto;

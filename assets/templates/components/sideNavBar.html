@@ -15,12 +15,12 @@
   <hr class="sidebar-divider my-0">
 
   <!-- Nav Item - Dashboard -->
-  <li style="font-size: 1.5em;" class="nav-item text-center mt-4" :class="{'ml-2': width > 767, 'mr-2': width <= 767}" v-for="(option, index) in actualOptions" @click="redirectToOption(option)">
-    <a class="nav-link" style="cursor: pointer">
+  <li class="nav-item text-center mt-4 f-15" :class="{'ml-2': width > 767, 'mr-2': width <= 767}" v-for="(option, index) in actualOptions" @click="redirectToOption(option)">
+    <a class="nav-link pointer">
       <template v-if="checkSelected(option)">
-        <font-awesome-icon :icon="checkIcon(option)" style="color: #ffaa06;" />&nbsp;
+        <font-awesome-icon :icon="checkIcon(option)" class="side-nav-bar-focus-color" />&nbsp;
         <span class="text-uppercase">
-          <strong style="color: #ffaa06;">{{ option }}&nbsp;
+          <strong class="side-nav-bar-focus-color">{{ option }}&nbsp;
             <font-awesome-icon icon="fa-solid fa-caret-left" />
           </strong>
         </span>

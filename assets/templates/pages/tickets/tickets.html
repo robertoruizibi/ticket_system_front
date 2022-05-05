@@ -1,9 +1,6 @@
 <div class="container">
   <div class="card shadow mb-4">
-    <div class="card-header py-3" style="    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;">
+    <div class="card-header py-3 listing-display">
       <h4 v-if="userIsAdmin" class="m-0 font-weight-bold text-primary">Tickets existentes</h4>
       <h4 v-if="!userIsAdmin" class="m-0 font-weight-bold text-primary">Tickets asignados</h4>
       <button v-if="userIsAdmin" @click="createNewTicket" class="btn btn-primary">Añadir ticket</button>
