@@ -1,4 +1,4 @@
-const apiURL = 'http://localhost:3000/api'
+const apiURL = 'http://de3e-176-56-74-208.ngrok.io'
 
 export default {
   // API Url
