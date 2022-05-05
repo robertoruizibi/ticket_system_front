@@ -40,11 +40,11 @@
             <p class="mt-1 ml-1" v-for="contenido, index in parseContenidoEndline(report.contenido)">{{ contenido }}</p>
           </div>
           <br v-if="report.archivo_adjunto">
-          <p v-if="report.archivo_adjunto">Fichero adjunto: <a :href="report.url" download>{{ report.archivo_adjunto }}</a></p>
+          <p v-if="report.archivo_adjunto" class="ml-2">Fichero adjunto: <a :href="report.url" download>{{ report.archivo_adjunto }}</a></p>
           <hr>
           <div class="row align-items-baseline">
             <div class="col-lg-4 col-sm-12" :class="{'text-center': width > 1000, 'text-left': width <= 1000}">
-              <template v-if="userIsAdmin">{{reportViewed(report.visto)}}</template>
+              <template v-if="userIsAdmin && checkSameUserReport(report)">{{reportViewed(report.visto)}}</template>
             </div>
             <div class="col-lg-4 col-sm-12 text-left">
               <p>Reporte creado por: <span class="text-capitalize">{{ report.nombre_creador }}</span></p>

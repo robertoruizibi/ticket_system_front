@@ -39,6 +39,9 @@ export default {
     })
   },
   methods: {
+    checkSameUserReport(report){
+      return report.creador === this.loggedUser.id_usuario
+    },
     parseContenidoEndline(contenido) {
       let splitted = contenido.split('/\n/g')
       let splitted2 = splitted[0].split('\n')

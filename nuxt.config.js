@@ -8,7 +8,7 @@ export default {
   head: {
     title: 'ticket_system_front',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'es'
     },
     bodyAttrs: {
       class: 'bg-gradient-background',
@@ -38,18 +38,15 @@ export default {
         type: "text/javascript"
       },
       {
-        src:
-          "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js",
+        src: "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js",
         type: "text/javascript"
       },
       {
-        src:
-          "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js",
+        src: "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js",
         type: "text/javascript"
       },
       {
-        src:
-          "https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js",
+        src: "https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js",
         type: "text/javascript"
       }
     ]
@@ -60,8 +57,6 @@ export default {
     '@/assets/styles/default.scss',
     '@/assets/styles/sb-admin-2.css',
     '@fortawesome/fontawesome-svg-core/styles.css'
-    // '@/assets/styles/fontawesome-free/css/all.css'
-    // '@/assets/styles/sb-admin-2.min.css'
   ],
 
   server: {

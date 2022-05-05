@@ -13,7 +13,8 @@ export default {
       email: '',
       message: '',
       to_name: 'empresa@gmail.com',
-      reportSended: false
+      emailSended: false,
+      errorEmail: false
     }
   },
   computed: {
@@ -24,20 +25,27 @@ export default {
   methods: {
     sendEmail(e) {
       try {
+        // Email y nombre del usuario que envía el correo
         this.email = this.loggedUser.email
         this.name = this.loggedUser.nombre_organizacion
+
+        // Método propio de emailjs que envía el correo sirviéndose de service_is, template_id y account_id
         emailjs.send(config.service_id,config.template_id,{
           to_name: this.to_name,
           from_name: this.name,
           from_email: this.email,
           message: this.message,
         }, config.account_id);
-        this.reportSended = true
+
+        // Establecemos el flag emailSended a true para mostar al cliente que su mensaje ha sido enviado
+        this.emailSended = true
+
+        // Hacemos reset del mensaje una vez se ha enviado
+        this.message = ''
       } catch (error) {
-        // console.log({error})
+        // Si hay algún error se pone el flag errorEmail a true para mostrar al usuario que ha habido un error
+        this.errorEmail = true
       }
-      // Reset form field
-      this.message = ''
     },
   },
   mounted(){

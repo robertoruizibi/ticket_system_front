@@ -31,7 +31,8 @@
             <div class="text-center">
               <h1 class="h4 text-gray-900 mb-4">{{title}}</h1>
             </div>
-            <p v-if="reportSended" class="alert alert-success">Se ha enviado el mensaje</p>
+            <p v-if="emailSended" class="alert alert-success">Se ha enviado el mensaje</p>
+            <p v-if="errorEmail" class="alert alert-danger"></p>
             <form class="user" @submit.prevent="sendEmail">
               <div class="form-group">
                 <!-- Nombre -->

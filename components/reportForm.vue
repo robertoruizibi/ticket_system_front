@@ -109,7 +109,7 @@ export default {
           visto: this.visto,
           id_ticket: this.ticketID,
           creador: this.creador,
-          nombre_creador: this.nombre_creador
+          nombre_creador: this.loggedUser.nombre_organizacion
         }
         let reportData = await updateReport(this, this.reportID, this.report)
         if (this.file !== '' && get(reportData, 'data.report.id_reporte', null)){

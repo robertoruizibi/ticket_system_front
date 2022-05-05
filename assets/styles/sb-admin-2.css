@@ -10534,9 +10534,9 @@ a:focus {
   font-size: 2rem;
 }
 
-.sidebar .sidebar-brand .sidebar-brand-text {
-  /* display: none; */
-}
+/* .sidebar .sidebar-brand .sidebar-brand-text {
+  display: none;
+} */
 
 .sidebar hr.sidebar-divider {
   margin: 0 1rem 1rem;
