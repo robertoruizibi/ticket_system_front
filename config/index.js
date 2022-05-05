@@ -1,12 +1,9 @@
-const apiURL = 'http://localhost:3000/api'
-const webUrl = 'http://localhost:8000/'
+const apiURL = process.env.API_URL
 
 export default {
   // API Url
   apiURL,
 
-  // WEB Url
-  webUrl,
 
   // API endpoints
   api: {
