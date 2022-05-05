@@ -20,6 +20,9 @@ export default {
     isLoginPath(){
       return this.$route.path === routes.index
     },
+    isUserLogged(){
+      return !isObjEmpty(this.loggedUser)
+    },
     ...mapGetters({
       loggedUser: 'user/getUser',
       sideNavBarState: 'sideNavBar/getSideNavBar',
