@@ -1,4 +1,4 @@
-const apiURL = '/api'
+const apiURL = ''
 
 export default {
   // API Url
