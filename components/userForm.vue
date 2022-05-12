@@ -143,7 +143,7 @@ export default {
             this.uploadImage(userData.data.usuario.id_usuario)
           }
 
-          if (userData.status && userData.status === 200) this.updatedSuccessfully = true
+          if (userData.status && userData.status === 200) this.createdSuccessfully = true
         }
       } else {
         // si es modo edicion
