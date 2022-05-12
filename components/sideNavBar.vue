@@ -10,7 +10,7 @@ import { isObjEmpty } from '~/utils/common'
 export default {
   data() {
     return {
-      adminOptions: ['Tickets', 'Usuarios', 'Configuración', 'Contacto', 'Política de privacidad'],
+      adminOptions: ['Usuarios', 'Tickets', 'Configuración', 'Política de privacidad'],
       normalUserOptions: ['Tickets', 'Configuración', 'Contacto', 'Política de privacidad'],
       actualOptions: []
     }
